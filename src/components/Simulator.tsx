@@ -28,20 +28,21 @@ function OledMenu({ view }: { view: Extract<View, { kind: "menu" }> }) {
   // Safari clamps scrollTop to 0 on overflow:hidden elements, which left the
   // bottom rows unreachable / half-clipped on iPhone. translateY works anywhere
   // and keeps the tiny screen from capturing finger-scroll on touch.
+  // We snap the offset to whole rows so a selected row is never half-clipped
+  // (the visible window isn't an exact multiple of the row height).
   useEffect(() => {
-    const clip = clipRef.current, track = trackRef.current, li = selRef.current;
-    if (!clip || !track || !li) return;
-    // li position within the (possibly translated) track — rects move together,
-    // so the difference is the stable, untranslated offset.
-    const liTop = li.getBoundingClientRect().top - track.getBoundingClientRect().top;
-    const liBottom = liTop + li.offsetHeight;
-    const winH = clip.clientHeight;
+    const clip = clipRef.current, li = selRef.current;
+    if (!clip || !li) return;
+    const rowH = li.offsetHeight;
+    if (!rowH) return;
+    const winRows = Math.max(1, Math.floor(clip.clientHeight / rowH)); // fully-visible rows
     setOffset((prev) => {
-      let next = prev;
-      if (liTop < prev) next = liTop;
-      else if (liBottom > prev + winH) next = liBottom - winH;
-      const max = Math.max(0, track.offsetHeight - winH);
-      return Math.min(Math.max(next, 0), max);
+      let first = Math.round(prev / rowH);                 // current top row
+      if (view.index < first) first = view.index;          // scrolled above → pull up
+      else if (view.index > first + winRows - 1) first = view.index - winRows + 1; // below → pull down
+      first = Math.max(0, Math.min(first, view.nodes.length - winRows));
+      first = Math.max(0, first);
+      return first * rowH;
     });
   }, [view.index, view.trail.length, view.nodes.length]);
 

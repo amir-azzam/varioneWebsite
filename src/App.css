@@ -39,7 +39,9 @@
 }
 .nav-link:not(.nav-link--cta):hover { color: var(--cyan); }
 .nav-link:not(.nav-link--cta):hover::after { transform: scaleX(1); }
-.nav-link--btn { background: none; border: none; padding: 0; cursor: pointer; font: inherit; }
+/* button reset — but keep .nav-link's font-family/size/weight so it matches the
+   "The device" / "Real device" links exactly */
+.nav-link--btn { background: none; border: none; padding: 0; cursor: pointer; }
 
 /* CTA — glowing pill */
 .nav-link--cta {
