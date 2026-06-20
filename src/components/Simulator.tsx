@@ -2,7 +2,7 @@
 // screen. Navigate the real menu tree; running a demo plays a safe scripted
 // animation while Vemo reacts, with a plain-language lesson beside it.
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDevice, type View } from "../device/useDevice";
 import { VemoFace } from "../device/VemoFace";
 import "./simulator.css";
@@ -18,32 +18,47 @@ function SignalBars({ value }: { value: number }) {
 
 function OledMenu({ view }: { view: Extract<View, { kind: "menu" }> }) {
   const header = view.trail.length ? view.trail[view.trail.length - 1] : "VariOne";
-  const listRef = useRef<HTMLUListElement | null>(null);
+  const clipRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLUListElement | null>(null);
   const selRef = useRef<HTMLLIElement | null>(null);
+  const [offset, setOffset] = useState(0);
 
-  // Keep the highlighted row in view as you scroll past the screen edge,
-  // like the real OLED menu (so bottom items aren't unreachable).
+  // Keep the highlighted row in view as you scroll past the screen edge, like the
+  // real OLED menu. We move the list with a CSS transform (not scrollTop): iOS
+  // Safari clamps scrollTop to 0 on overflow:hidden elements, which left the
+  // bottom rows unreachable / half-clipped on iPhone. translateY works anywhere
+  // and keeps the tiny screen from capturing finger-scroll on touch.
   useEffect(() => {
-    const li = selRef.current, ul = listRef.current;
-    if (!li || !ul) return;
-    const top = li.offsetTop;
-    const bottom = top + li.offsetHeight;
-    if (top < ul.scrollTop) ul.scrollTop = top;
-    else if (bottom > ul.scrollTop + ul.clientHeight) ul.scrollTop = bottom - ul.clientHeight;
-  }, [view.index, view.trail.length]);
+    const clip = clipRef.current, track = trackRef.current, li = selRef.current;
+    if (!clip || !track || !li) return;
+    // li position within the (possibly translated) track — rects move together,
+    // so the difference is the stable, untranslated offset.
+    const liTop = li.getBoundingClientRect().top - track.getBoundingClientRect().top;
+    const liBottom = liTop + li.offsetHeight;
+    const winH = clip.clientHeight;
+    setOffset((prev) => {
+      let next = prev;
+      if (liTop < prev) next = liTop;
+      else if (liBottom > prev + winH) next = liBottom - winH;
+      const max = Math.max(0, track.offsetHeight - winH);
+      return Math.min(Math.max(next, 0), max);
+    });
+  }, [view.index, view.trail.length, view.nodes.length]);
 
   return (
     <div className="oled-inner">
       <div className="oled-header"><span>{header}</span><span className="oled-batt">USB</span></div>
-      <ul className="oled-list" ref={listRef}>
-        {view.nodes.map((n, i) => (
-          <li key={n.id} ref={i === view.index ? selRef : undefined} className={i === view.index ? "sel" : ""}>
-            <span className="caret">{i === view.index ? ">" : " "}</span>{n.label}
-            {n.status === "planned" && <span className="oled-soon">soon</span>}
-            {n.status === "progress" && <span className="oled-soon">wip</span>}
-          </li>
-        ))}
-      </ul>
+      <div className="oled-list" ref={clipRef}>
+        <ul className="oled-track" ref={trackRef} style={{ transform: `translateY(${-offset}px)` }}>
+          {view.nodes.map((n, i) => (
+            <li key={n.id} ref={i === view.index ? selRef : undefined} className={i === view.index ? "sel" : ""}>
+              <span className="caret">{i === view.index ? ">" : " "}</span>{n.label}
+              {n.status === "planned" && <span className="oled-soon">soon</span>}
+              {n.status === "progress" && <span className="oled-soon">wip</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

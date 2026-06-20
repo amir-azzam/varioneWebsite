@@ -30,16 +30,18 @@
   text-transform: uppercase; letter-spacing: 0.04em;
 }
 .oled-batt { opacity: 0.7; }
+/* clip window: fixed visible area. The track inside is moved via translateY in
+   JS to keep the selected row on screen. overflow:hidden everywhere (not scroll)
+   so the tiny OLED never traps page finger-scroll on iOS — and because iOS
+   ignores programmatic scrollTop here, we never relied on it. */
 .oled-list {
   list-style: none; margin: 0; padding: 0; font-size: 0.8rem;
   flex: 1; min-height: 0; position: relative;
-  overflow-y: auto; scrollbar-width: none;
+  overflow: hidden;
 }
-.oled-list::-webkit-scrollbar { display: none; }
-/* on touch, don't let the tiny OLED capture finger-scroll (it trapped the page
-   on iOS). The on-screen pad buttons still scroll the menu via code. */
-@media (pointer: coarse) {
-  .oled-list { overflow: hidden; touch-action: pan-y; }
+.oled-track {
+  list-style: none; margin: 0; padding: 0 0 2px;
+  transition: transform .12s ease;
 }
 .oled-list li { display: flex; align-items: center; gap: 4px; padding: 1px 2px; border-radius: 3px; }
 .oled-list li .caret { width: 8px; }

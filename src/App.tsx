@@ -8,13 +8,49 @@ import { DebriefModal } from "./components/DebriefModal";
 import { DEBRIEF_ORDER } from "./device/content";
 import "./App.css";
 
+// The physical VariOne serves its own control panel on the local network at
+// http://varione.local — link straight to it from the nav.
+const DEVICE_WEBUI = "http://varione.local";
+
 function Nav({ onContact }: { onContact: () => void }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const close = () => setOpen(false);
+
   return (
-    <header className="nav">
+    <header className={`nav ${scrolled ? "is-scrolled" : ""} ${open ? "is-open" : ""}`}>
       <div className="wrap nav-inner">
-        <a href="#meet" className="nav-link">The device</a>
-        <a href="#simulator" className="nav-link nav-link--cta">Try the device</a>
-        <button className="nav-link nav-link--btn" onClick={onContact}>Contact us</button>
+        <a href="#top" className="nav-brand" onClick={close} aria-label="VariOne home">
+          <img src="assets/logo.png" alt="VariOne" />
+        </a>
+
+        <button
+          className="nav-burger"
+          aria-label="Menu"
+          aria-expanded={open}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span /><span /><span />
+        </button>
+
+        <nav className="nav-menu">
+          <a href="#meet" className="nav-link" onClick={close}>The device</a>
+          <a href={DEVICE_WEBUI} className="nav-link" target="_blank" rel="noreferrer" onClick={close}>
+            Real device
+          </a>
+          <a href="#simulator" className="nav-link nav-link--cta" onClick={close}>Try the device</a>
+          <button className="nav-link nav-link--btn" onClick={() => { close(); onContact(); }}>
+            Contact us
+          </button>
+        </nav>
       </div>
     </header>
   );
@@ -80,7 +116,7 @@ export default function App() {
   };
   // Vemo's Academy is Ahmed's companion app, served as a static sub-app at /vemo/.
   // Absolute path so it always lands at the site root (never compounds).
-  const openAcademy = () => { window.location.href = "/vemo/"; };
+  const openAcademy = () => { window.location.href = "/vemo/index.html"; };
 
   // reveal-on-scroll
   useEffect(() => {

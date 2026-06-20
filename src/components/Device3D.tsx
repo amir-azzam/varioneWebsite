@@ -1,6 +1,6 @@
 // Rotating 3D device viewer for the Meet box. Uses Google's <model-viewer>
-// (bundled, works offline). Drop the real VariOne .glb in at /assets/varione.glb
-// and change `src` below. For now it shows a placeholder so the mechanism is live.
+// (bundled, works offline). Model is the real VariOne, converted from the Bambu
+// 3mf (deduped to 136k faces, Z-up→Y-up, normalized) → /assets/varione.glb.
 
 import "@google/model-viewer";
 
@@ -11,7 +11,7 @@ export function Device3D({ ghost }: { ghost: boolean }) {
   return (
     <MV
       className={`device3d ${ghost ? "is-ghost" : ""}`}
-      src="assets/placeholder.glb"
+      src="assets/varione.glb"
       camera-controls
       auto-rotate
       auto-rotate-delay={0}
