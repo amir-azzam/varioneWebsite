@@ -17,7 +17,6 @@ export function Hero() {
       <div className="hero-grain" />
 
       <div className="hero-inner">
-        <img className="hero-logo" src="assets/logo.png" alt="VariOne" />
         <p className="hero-tagline">One Device, Endless Signals</p>
         <p className="hero-sub">A friendly handheld that makes invisible wireless signals visible, so anyone can learn how they work and why they matter.</p>
         <div className="hero-actions">
