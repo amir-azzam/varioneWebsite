@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: authenticate aws and copy manifest
-        uses: appleboy/scp-action@v1.2.0
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: "${{secrets.HOST}}"
           username: ${{secrets.USERNAME}}
@@ -43,7 +43,7 @@ jobs:
           target: "~/app"
 
       - name: apply k3s
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: "${{secrets.HOST}}"
           username: ${{secrets.USERNAME}}
