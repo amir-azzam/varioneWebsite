@@ -1,0 +1,74 @@
+/* Device debrief modal — mirrors the dark on-device debrief look. */
+
+.db {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: 86vh;
+  overflow-y: auto;
+  background: linear-gradient(180deg, var(--card), var(--bg-2));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 28px 22px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  animation: modal-rise 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.db-head { margin-bottom: 16px; }
+.db-badge {
+  display: inline-block;
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em;
+  color: var(--ok); background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 7px;
+  padding: 4px 11px; text-transform: uppercase;
+}
+.db-sub { margin: 12px 0 0; color: var(--muted); font-size: 0.95rem; }
+
+.db-picker {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 16px;
+}
+.db-tab {
+  font-family: inherit; font-size: 0.82rem; font-weight: 700;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 14px; cursor: pointer;
+  transition: color .12s, border-color .12s, background .12s;
+}
+.db-tab:hover { color: var(--cyan); border-color: var(--cyan); }
+.db-tab.is-active {
+  color: #042036;
+  background: linear-gradient(180deg, var(--cyan), var(--blue));
+  border-color: transparent;
+}
+
+.db-feature { margin: 0 0 4px; color: var(--cyan-soft); }
+.db-vector {
+  display: inline-block; margin-bottom: 18px;
+  font-size: 0.9rem; color: var(--muted); font-style: italic;
+}
+.db-h {
+  font-family: var(--display);
+  font-size: 1.05rem; color: var(--white);
+  margin: 18px 0 8px;
+}
+.db-body p { color: var(--pale); line-height: 1.6; }
+.db-tips { margin: 0; padding-left: 20px; }
+.db-tips li { color: var(--pale); line-height: 1.55; margin-bottom: 8px; }
+.db-closing {
+  margin-top: 18px; padding: 14px 16px;
+  background: rgba(41, 199, 246, 0.06);
+  border-left: 3px solid var(--cyan);
+  border-radius: 8px;
+  color: var(--white); font-size: 0.96rem;
+}
+.db-foot {
+  margin-top: 18px; font-size: 0.76rem; color: var(--muted); opacity: 0.8;
+}
+
+@media (max-width: 560px) {
+  .db { padding: 24px 18px 18px; }
+}

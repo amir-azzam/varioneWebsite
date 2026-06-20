@@ -1,0 +1,85 @@
+/* hide the native cursor while ours is active */
+.has-cursor, .has-cursor * { cursor: none !important; }
+
+.cursor { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
+.cursor > div {
+  position: fixed; top: 0; left: 0; pointer-events: none;
+  opacity: 1; transition: opacity .2s ease;
+}
+.cur-hidden .cursor > div { opacity: 0; }
+
+/* position: dot tracks instantly (--cx/--cy), ring/reticle trail (--rx/--ry) */
+.cur-dot {
+  transform: translate(calc(var(--cx, -100px) - 50%), calc(var(--cy, -100px) - 50%));
+}
+.cur-ring, .cur-reticle {
+  transform: translate(calc(var(--rx, -100px) - 50%), calc(var(--ry, -100px) - 50%));
+}
+
+/* hide all parts by default, each variant shows its own */
+.cur-dot, .cur-ring, .cur-reticle { display: none; }
+.cursor--ring .cur-dot, .cursor--ring .cur-ring { display: block; }
+.cursor--orb .cur-ring { display: block; }
+.cursor--reticle .cur-reticle, .cursor--reticle .cur-dot { display: block; }
+
+/* ---- shared dot ---- */
+.cur-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--cyan-soft);
+  box-shadow: 0 0 8px var(--cyan), 0 0 16px rgba(41,199,246,0.7);
+}
+
+/* ---- variant: dot + ring ---- */
+.cursor--ring .cur-ring {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid var(--cyan);
+  box-shadow: 0 0 12px rgba(41,199,246,0.55), inset 0 0 10px rgba(41,199,246,0.25);
+  transition: width .18s ease, height .18s ease, border-color .18s ease;
+}
+.cur-hover.has-cursor .cursor--ring .cur-ring { width: 56px; height: 56px; border-color: var(--cyan-soft); }
+.cur-down.has-cursor .cursor--ring .cur-ring { width: 28px; height: 28px; }
+
+/* ---- variant: orb (glowing comet) ---- */
+.cursor--orb .cur-ring {
+  width: 22px; height: 22px; border-radius: 50%; border: 0;
+  background: radial-gradient(circle, var(--cyan-soft) 0%, rgba(41,199,246,0.45) 45%, transparent 72%);
+  box-shadow: 0 0 20px rgba(41,199,246,0.85), 0 0 40px rgba(41,199,246,0.5);
+  transition: width .18s ease, height .18s ease;
+}
+.cur-hover.has-cursor .cursor--orb .cur-ring { width: 36px; height: 36px; }
+.cur-down.has-cursor .cursor--orb .cur-ring { width: 16px; height: 16px; }
+
+/* ---- variant: reticle (rotating scope) ---- */
+.cur-reticle { width: 46px; height: 46px; }
+.cur-reticle svg {
+  width: 100%; height: 100%;
+  fill: none; stroke: var(--cyan); stroke-width: 3; stroke-linecap: round;
+  filter: drop-shadow(0 0 5px rgba(41,199,246,0.7));
+  animation: cur-spin 7s linear infinite;
+  transition: transform .2s ease, stroke .2s ease;
+}
+.cursor--reticle .cur-dot { width: 5px; height: 5px; }
+.cur-hover.has-cursor .cursor--reticle svg { stroke: var(--cyan-soft); transform: scale(0.78); animation-play-state: paused; }
+.cur-down.has-cursor .cursor--reticle svg { transform: scale(0.6); }
+@keyframes cur-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cur-reticle svg { animation: none; }
+}
+
+/* ---- temporary chooser ---- */
+.cursor-switch {
+  position: fixed; right: 18px; bottom: 18px; z-index: 80;
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(5,15,34,0.85); backdrop-filter: blur(10px);
+  border: 1px solid var(--line); border-radius: 999px; padding: 7px 10px 7px 14px;
+  font-size: 0.82rem; box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+.cursor-switch > span { color: var(--muted); font-weight: 600; }
+.cursor-switch button {
+  font-family: inherit; cursor: none; background: transparent; color: var(--pale);
+  border: 1px solid transparent; border-radius: 999px; padding: 5px 12px;
+  font-size: 0.82rem; font-weight: 600; transition: background .15s, color .15s;
+}
+.cursor-switch button:hover { color: var(--cyan); }
+.cursor-switch button.on { background: linear-gradient(180deg, var(--cyan), var(--blue)); color: #042036; }

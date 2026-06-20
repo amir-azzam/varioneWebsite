@@ -1,0 +1,76 @@
+.hero {
+  position: relative;
+  /* fallback for old browsers, then dynamic viewport height which tracks the
+     mobile address bar so the hero always fills the screen (no seam). */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+  background: var(--bg);
+}
+.hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  /* black bars are cropped out of the clip itself, so no overscan needed */
+  z-index: 0;
+}
+/* darken top (for nav) and bottom-left (for the content) */
+.hero-veil {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(3,7,15,0.6) 0%, transparent 20%, transparent 48%, rgba(3,7,15,0.92) 100%),
+    linear-gradient(90deg, rgba(3,7,15,0.75) 0%, transparent 55%);
+}
+/* fine film grain over the video — masks the soft/low-res look as cinematic
+   texture, and costs no video file size (pure CSS SVG noise). */
+.hero-grain {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  width: 100%;
+  padding: 0 6vw 9vh;
+}
+
+.hero-logo {
+  height: clamp(54px, 9vw, 96px);
+  width: auto; margin-bottom: 22px;
+  filter: drop-shadow(0 6px 26px rgba(41,199,246,0.45));
+}
+.hero-tagline {
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 4.4vw, 3rem);
+  font-weight: 700; letter-spacing: -0.02em;
+  margin: 0 0 14px;
+  background: linear-gradient(90deg, var(--white), var(--cyan-soft));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero-sub { max-width: 46ch; color: var(--pale); font-size: 1.12rem; margin-bottom: 28px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.hero-scroll {
+  position: absolute; z-index: 2; bottom: 26px; right: 6vw; left: auto; transform: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--muted); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.hero-scroll span {
+  width: 22px; height: 36px; border: 2px solid var(--line); border-radius: 12px; position: relative;
+}
+.hero-scroll span::after {
+  content: ""; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 7px; background: var(--cyan); border-radius: 2px;
+  animation: scrolldot 1.6s ease-in-out infinite;
+}
+@keyframes scrolldot { 0%,100% { opacity: 0; transform: translate(-50%, 0); } 50% { opacity: 1; transform: translate(-50%, 10px); } }
+
+/* the scroll cue can collide with the CTA buttons on small or short screens —
+   it's decorative, so hide it there. */
+@media (max-width: 768px), (max-height: 640px) {
+  .hero-scroll { display: none; }
+}

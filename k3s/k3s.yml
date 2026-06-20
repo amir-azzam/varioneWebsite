@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: varione
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: varione
+  template:
+    metadata:
+      labels:
+        app: varione
+    spec:
+      containers:
+      - name: varione
+        image: amirazzamm/varione:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: varione
+spec:
+  type: ClusterIP
+  selector:
+    app: varione
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: varione
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - varione.ai
+    secretName: varione-tls
+  rules:
+  - host: varione.ai
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: varione
+            port:
+              number: 80

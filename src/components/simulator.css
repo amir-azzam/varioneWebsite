@@ -1,0 +1,99 @@
+.sim { width: 100%; }
+.sim-stage { display: grid; gap: 30px; align-items: start; }
+@media (min-width: 900px) { .sim-stage { grid-template-columns: 380px 1fr; } }
+
+/* device shell */
+.device {
+  background: linear-gradient(180deg, #13325f, #0a1f3e);
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  padding: 18px 18px 20px;
+  box-shadow: 0 36px 70px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+  width: 380px; max-width: 100%; margin: 0 auto;
+}
+.device-top { display: flex; align-items: center; justify-content: space-between; padding: 2px 6px 12px; }
+.device-brand { font-weight: 800; letter-spacing: 0.04em; color: var(--cyan); }
+.device-led { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px var(--ok); }
+
+/* OLED */
+.oled {
+  background: #02060f; border-radius: 12px;
+  border: 1px solid rgba(103,233,255,0.25);
+  aspect-ratio: 128 / 64; padding: 10px 12px;
+  color: var(--cyan-soft); font-family: var(--mono);
+  box-shadow: inset 0 0 24px rgba(41,199,246,0.18); overflow: hidden;
+}
+.oled-inner { height: 100%; display: flex; flex-direction: column; }
+.oled-header {
+  display: flex; justify-content: space-between; font-size: 0.74rem; font-weight: 700;
+  border-bottom: 1px solid rgba(103,233,255,0.3); padding-bottom: 4px; margin-bottom: 5px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.oled-batt { opacity: 0.7; }
+.oled-list {
+  list-style: none; margin: 0; padding: 0; font-size: 0.8rem;
+  flex: 1; min-height: 0; position: relative;
+  overflow-y: auto; scrollbar-width: none;
+}
+.oled-list::-webkit-scrollbar { display: none; }
+/* on touch, don't let the tiny OLED capture finger-scroll (it trapped the page
+   on iOS). The on-screen pad buttons still scroll the menu via code. */
+@media (pointer: coarse) {
+  .oled-list { overflow: hidden; touch-action: pan-y; }
+}
+.oled-list li { display: flex; align-items: center; gap: 4px; padding: 1px 2px; border-radius: 3px; }
+.oled-list li .caret { width: 8px; }
+.oled-list li.sel { background: var(--cyan-soft); color: #02060f; font-weight: 700; }
+.oled-soon { margin-left: auto; font-size: 0.6rem; opacity: 0.6; }
+.oled-list li.sel .oled-soon { opacity: 0.8; }
+
+.oled-demo { display: flex; gap: 8px; align-items: center; height: 100%; }
+.oled-vemo { flex: 0 0 auto; }
+.oled-body { flex: 1; min-width: 0; }
+.oled-line { font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.oled-barsrow { display: flex; gap: 8px; margin-top: 4px; }
+.oled-bars { display: inline-flex; align-items: flex-end; gap: 2px; }
+.oled-bars span { width: 3px; background: rgba(103,233,255,0.25); border-radius: 1px; }
+.oled-bars span.on { background: var(--cyan-soft); }
+.oled-wave { width: 100%; height: 24px; margin-top: 4px; }
+
+/* D-pad */
+.pad { position: relative; width: 168px; height: 120px; margin: 18px auto 8px; }
+.pad-btn {
+  position: absolute; border: 1px solid var(--line);
+  background: linear-gradient(180deg, #1a3c6b, #0e2547); color: var(--pale);
+  font-size: 0.8rem; cursor: pointer; border-radius: 10px; width: 46px; height: 36px;
+  display: flex; align-items: center; justify-content: center; transition: background .1s, transform .06s;
+}
+.pad-btn:hover { background: linear-gradient(180deg, #24508c, #143058); color: #fff; }
+.pad-btn:active { transform: translateY(1px) scale(0.97); }
+.pad-btn.up { left: 61px; top: 0; }
+.pad-btn.left { left: 6px; top: 42px; }
+.pad-btn.ok { left: 61px; top: 42px; background: linear-gradient(180deg, var(--cyan), var(--blue)); color: #042036; font-weight: 800; }
+.pad-btn.right { left: 116px; top: 42px; }
+.pad-btn.down { left: 61px; top: 84px; }
+.pad-legend { display: flex; justify-content: center; gap: 14px; font-size: 0.7rem; color: var(--muted); }
+
+/* lesson panel */
+.lesson h3 { margin-top: 10px; }
+.l-label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--cyan); margin-bottom: 2px; }
+.l-ok { color: var(--ok); }
+.lesson p { margin-bottom: 14px; }
+.lesson--idle .howto { margin: 4px 0 14px; padding-left: 18px; color: var(--pale); }
+.lesson--idle .howto li { margin-bottom: 5px; }
+.lesson--idle .howto b { color: var(--white); }
+
+/* debrief hand-off + back, inside the lesson card */
+.lesson-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.btn--sm { padding: 9px 16px; font-size: 0.88rem; }
+
+/* three action buttons under the simulator */
+.sim-actions {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  justify-content: center;
+  margin-top: 28px;
+}
+@media (max-width: 560px) {
+  .sim-actions { flex-direction: column; }
+  .sim-actions .btn { width: 100%; justify-content: center; }
+}
