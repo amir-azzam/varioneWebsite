@@ -1,0 +1,92 @@
+/* nav — floats over the hero, glass-blurs into a solid bar once you scroll.
+   Shared by the home page and the journey page (see Nav.tsx). */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: transparent; border-bottom: 1px solid transparent;
+  transition: background .25s ease, border-color .25s ease, backdrop-filter .25s ease, box-shadow .25s ease;
+}
+.nav.is-scrolled {
+  background: rgba(6, 14, 28, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: rgba(103, 233, 255, 0.16);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; height: 104px; }
+
+/* logo, left */
+.nav-brand { display: inline-flex; align-items: center; flex: 0 0 auto; }
+.nav-brand img {
+  height: 84px; width: auto; display: block;
+  filter: drop-shadow(0 1px 8px rgba(0,0,0,0.5));
+  transition: transform .15s ease;
+}
+.nav-brand:hover img { transform: scale(1.04); }
+
+/* links cluster, right */
+.nav-menu { display: flex; align-items: center; gap: 26px; }
+.nav-link {
+  position: relative;
+  font-family: var(--display);
+  color: var(--white); font-weight: 500; font-size: 0.86rem; letter-spacing: 0.01em;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+  transition: color .15s ease;
+}
+/* sliding underline on the plain links */
+.nav-link:not(.nav-link--cta)::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1.5px;
+  background: var(--cyan); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left; transition: transform .2s ease;
+}
+.nav-link:not(.nav-link--cta):hover { color: var(--cyan); }
+.nav-link:not(.nav-link--cta):hover::after { transform: scaleX(1); }
+/* button reset — but keep .nav-link's font-family/size/weight so it matches the
+   "The device" / "Real device" links exactly */
+.nav-link--btn { background: none; border: none; padding: 0; cursor: pointer; }
+
+/* CTA — glowing pill */
+.nav-link--cta {
+  color: #042036; font-weight: 700;
+  background: linear-gradient(180deg, var(--cyan), var(--blue));
+  padding: 9px 18px; border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(41, 199, 246, 0.32);
+  text-shadow: none;
+  transition: transform .12s ease, box-shadow .2s ease, filter .2s ease;
+}
+.nav-link--cta:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(41, 199, 246, 0.45); filter: brightness(1.05); }
+.nav-link--cta:active { transform: translateY(0); }
+
+/* hamburger — hidden on desktop */
+.nav-burger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: 0; cursor: pointer; padding: 8px; margin-right: -8px;
+}
+.nav-burger span {
+  width: 24px; height: 2px; border-radius: 2px; background: var(--white);
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+@media (max-width: 720px) {
+  .nav-inner { height: 72px; }
+  .nav-brand img { height: 56px; }
+  .nav-burger { display: flex; }
+  .nav-menu {
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: rgba(6, 14, 28, 0.96);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(103, 233, 255, 0.16);
+    padding: 8px 0;
+    transform: translateY(-12px); opacity: 0; pointer-events: none;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+  .nav.is-open .nav-menu { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .nav-menu .nav-link { padding: 14px 24px; font-size: 1rem; }
+  .nav-link:not(.nav-link--cta)::after { display: none; }
+  .nav-link--cta { margin: 8px 24px; text-align: center; }
+  .nav-link--btn { text-align: left; }
+  /* burger → X */
+  .nav.is-open .nav-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav.is-open .nav-burger span:nth-child(2) { opacity: 0; }
+  .nav.is-open .nav-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}

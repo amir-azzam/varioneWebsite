@@ -128,11 +128,6 @@ export function VideoPanel({
         </button>
       )}
 
-      <span className="jv-badge">
-        <span className="jv-badge-dot" />
-        Preview cut — final edit in progress
-      </span>
-
       {/* Unmute nudge while autoplaying muted */}
       {mode === "playing" && muted && (
         <button className="jv-unmute" onClick={onToggleMute}>🔊 Tap for sound</button>

@@ -6,26 +6,12 @@
 .jv-vemo { display: block; height: auto; max-width: 100%; -webkit-user-drag: none; user-select: none; }
 
 /* ---- top bar ---- */
-.jv-topbar {
-  position: sticky; top: 0; z-index: 40;
-  backdrop-filter: blur(10px);
-  background: linear-gradient(180deg, rgba(3,7,15,0.92), rgba(3,7,15,0.66));
-  border-bottom: 1px solid var(--line);
-  transition: transform .35s ease, margin-top .35s ease, opacity .35s ease;
-}
-/* slide up + pull following content up (reclaim the 57px) once the video plays
-   or we scroll a little — more room for the stage. */
-.jv-topbar.is-hidden { transform: translateY(-100%); margin-top: -57px; opacity: 0; pointer-events: none; }
-.jv-topbar-inner { display: flex; align-items: center; justify-content: space-between; height: 56px; }
-.jv-home { display: inline-flex; align-items: center; gap: 10px; color: var(--white); font-weight: 700; }
-.jv-home img { height: 24px; width: auto; filter: drop-shadow(0 2px 10px rgba(41,199,246,0.4)); }
-.jv-home:hover { color: var(--cyan); }
-
 /* ---- theater stage ---- */
 .jv-theater {
   min-height: 100vh;
   display: flex; align-items: flex-start;
-  padding: 26px 0 22px;
+  /* top pad clears the fixed shared nav (104px desktop) */
+  padding: 120px 0 22px;
   background:
     radial-gradient(120% 80% at 80% -10%, rgba(41,199,246,0.12), transparent 60%),
     radial-gradient(90% 70% at 0% 110%, rgba(35,141,219,0.12), transparent 55%),
@@ -253,7 +239,7 @@
 /* Below ~1024px the one-screen fit isn't worth cramping the video: let it grow
    to full width and the page scroll naturally. */
 @media (max-width: 1024px) {
-  .jv-theater { min-height: auto; padding: 64px 0 32px; }
+  .jv-theater { min-height: auto; padding: 96px 0 32px; }
   .jv-theater-wrap {
     grid-template-columns: 1fr;
     grid-template-areas: "video" "morale" "report";

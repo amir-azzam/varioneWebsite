@@ -3,59 +3,11 @@ import { Hero } from "./components/Hero";
 import { MeetVariOne } from "./components/MeetVariOne";
 import { Simulator } from "./components/Simulator";
 import { ScrollBar } from "./components/ScrollBar";
+import { Nav } from "./components/Nav";
 import { ContactModal } from "./components/ContactModal";
 import { DebriefModal } from "./components/DebriefModal";
 import { DEBRIEF_ORDER } from "./device/content";
 import "./App.css";
-
-// The physical VariOne serves its own control panel on the local network at
-// http://varione.local — link straight to it from the nav.
-const DEVICE_WEBUI = "http://varione.local";
-
-function Nav({ onContact }: { onContact: () => void }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const close = () => setOpen(false);
-
-  return (
-    <header className={`nav ${scrolled ? "is-scrolled" : ""} ${open ? "is-open" : ""}`}>
-      <div className="wrap nav-inner">
-        <a href="#top" className="nav-brand" onClick={close} aria-label="VariOne home">
-          <img src="assets/logo.png" alt="VariOne" />
-        </a>
-
-        <button
-          className="nav-burger"
-          aria-label="Menu"
-          aria-expanded={open}
-          onClick={() => setOpen((o) => !o)}
-        >
-          <span /><span /><span />
-        </button>
-
-        <nav className="nav-menu">
-          <a href="#meet" className="nav-link" onClick={close}>Device</a>
-          <a href="/journey/" className="nav-link" onClick={close}>The Journey</a>
-          <a href={DEVICE_WEBUI} className="nav-link" target="_blank" rel="noreferrer" onClick={close}>
-            Real device
-          </a>
-          <button className="nav-link nav-link--btn" onClick={() => { close(); onContact(); }}>
-            Contact us
-          </button>
-          <a href="#simulator" className="nav-link nav-link--cta" onClick={close}>Try the device</a>
-        </nav>
-      </div>
-    </header>
-  );
-}
 
 function SimulatorSection({
   onOpenAcademy, onOpenDebrief,
@@ -127,6 +79,15 @@ export default function App() {
   // Absolute path so it always lands at the site root (never compounds).
   const openAcademy = () => { window.location.href = "/vemo/"; };
 
+  // Open the contact form when we arrive at /#contact — lets pages that can't drive
+  // React state (the static Academy nav) link here to pop the form.
+  useEffect(() => {
+    const openIfContact = () => { if (window.location.hash === "#contact") setContactOpen(true); };
+    openIfContact();
+    window.addEventListener("hashchange", openIfContact);
+    return () => window.removeEventListener("hashchange", openIfContact);
+  }, []);
+
   // reveal-on-scroll
   useEffect(() => {
     const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
@@ -141,7 +102,7 @@ export default function App() {
   return (
     <>
       <ScrollBar />
-      <Nav onContact={() => setContactOpen(true)} />
+      <Nav onContact={() => setContactOpen(true)} current="home" />
       <main>
         <Hero />
         <MeetVariOne />

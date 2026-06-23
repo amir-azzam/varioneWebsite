@@ -16,7 +16,7 @@ export const SUPERVISOR: Member = {
 
 export const TEAM: Member[] = [
   { name: "Ahmed Hossam", role: "Hardware & Firmware Lead", mood: "focused" },
-  { name: "Amir Azzam", role: "Website & Planning", mood: "thinking" },
+  { name: "Amir Azzam", role: "Website & Hardware", mood: "thinking" },
   { name: "Youssef Allam", role: "Website & Device Simulator", mood: "excited" },
   { name: "Mariam Hosam", role: "Documentation & Review", mood: "curious" },
   { name: "Mazen Sadek", role: "Firmware & Hardware", mood: "surprised" },

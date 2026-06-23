@@ -11,6 +11,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ScrollBar } from "../components/ScrollBar";
+import { Nav } from "../components/Nav";
+import { ContactModal } from "../components/ContactModal";
 import { JOURNEY_NODES } from "./journeyData";
 import { MoraleCurve } from "./MoraleCurve";
 import { VideoPanel } from "./VideoPanel";
@@ -38,25 +40,9 @@ export default function JourneyApp() {
   const [muted, setMuted] = useState(true);
   const [ended, setEnded] = useState(false);
   const [videoAvailable, setVideoAvailable] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
-  const [nearTop, setNearTop] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
 
   const capture = typeof window !== "undefined" && window.location.search.includes("capture");
-
-  // Reclaim space: hide the top bar during the experience (any time the video has
-  // started or we've scrolled), giving the stage more room. It slides back in when
-  // the pointer moves to the very top edge, so Home stays reachable.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 48);
-    const onMove = (e: MouseEvent) => setNearTop(e.clientY < 64);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("mousemove", onMove, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("mousemove", onMove);
-    };
-  }, []);
 
   // Sync engine: video clock -> active chapter + progress.
   const onTick = useCallback((t: SyncTick) => {
@@ -143,21 +129,12 @@ export default function JourneyApp() {
   const riderFloat = videoAvailable && mode !== "idle"
     ? floatIndexForTime(nodes, currentTime)
     : activeIndex;
-  const hideNav = (mode !== "idle" || scrolled) && !nearTop;
 
   return (
     <>
       <ScrollBar />
 
-      <header className={`jv-topbar ${hideNav ? "is-hidden" : ""}`}>
-        <div className="wrap jv-topbar-inner">
-          <a href="/" className="jv-home" aria-label="Back to VariOne home">
-            <img src="/assets/logo.png" alt="VariOne" />
-            <span>Home</span>
-          </a>
-          <span className="tag">The Build Journey</span>
-        </div>
-      </header>
+      <Nav onContact={() => setContactOpen(true)} current="journey" />
 
       <main>
         <section className="jv-theater" id="top">
@@ -198,6 +175,8 @@ export default function JourneyApp() {
 
         <Team />
       </main>
+
+      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   );
 }
