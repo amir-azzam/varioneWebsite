@@ -216,9 +216,11 @@
 }
 .jv-supervisor h3 { margin: 6px 0 2px; }
 .jv-team-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 16px; margin-top: 28px;
 }
+@media (max-width: 860px) { .jv-team-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 440px) { .jv-team-grid { grid-template-columns: 1fr; } }
 .jv-member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; }
 .jv-member-name { margin: 6px 0 0; font-size: 1.05rem; }
 .jv-member-role { margin: 0; font-size: 0.85rem; }

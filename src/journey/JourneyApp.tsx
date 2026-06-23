@@ -59,7 +59,12 @@ export default function JourneyApp() {
     if (!v) return;
     const onPlayEv = () => { setEnded(false); setMode("playing"); };
     const onPauseEv = () => { if (!v.ended) setMode((m) => (m === "idle" ? "idle" : "paused")); };
-    const onEnded = () => { setEnded(true); setMode("paused"); };
+    const onEnded = () => {
+      setEnded(true);
+      setMode("paused");
+      // Video's done → carry the viewer straight to the team section.
+      document.getElementById("team")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
     const onErr = () => { setVideoAvailable(false); setMode("idle"); };
     v.addEventListener("play", onPlayEv);
     v.addEventListener("pause", onPauseEv);

@@ -42,10 +42,6 @@ export function Team() {
           <p className="muted" style={{ maxWidth: "52ch", margin: "0 auto 22px" }}>
             A graduation project at CIC New Cairo. Cute outside, powerful inside.
           </p>
-          <div className="jv-closing-actions">
-            <a href="/" className="btn btn--primary">Back to VariOne</a>
-            <a href="/#simulator" className="btn btn--ghost">Try the device</a>
-          </div>
         </Reveal>
       </div>
     </section>
