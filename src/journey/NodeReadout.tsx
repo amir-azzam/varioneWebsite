@@ -1,4 +1,4 @@
-// The chapter readout — the synced "what we encountered and how we fixed it"
+// The chapter readout - the synced "what we encountered and how we fixed it"
 // panel, now LANDSCAPE so it sits clearly below the video and reads at a glance
 // while the clip plays. A compact header row (mascot · period · headline · stat)
 // over a 3-column body (the story + chips | what broke | what we won).

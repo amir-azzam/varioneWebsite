@@ -1,4 +1,4 @@
-// Meet-the-team section — closes the journey. Sits at the bottom of the page and
+// Meet-the-team section - closes the journey. Sits at the bottom of the page and
 // is revealed as the video reaches its end (or on scroll). Supervisor on top,
 // then the eight-member grid. Avatars are Vemo mascots in different moods.
 
@@ -15,7 +15,7 @@ export function Team() {
           <h2>Meet the team</h2>
           <p className="lead" style={{ margin: "0 auto" }}>
             Eight students at CIC New Cairo who broke a lot of radios, fixed most of
-            them, and built VariOne — under the guidance of our supervisor.
+            them, and built VariOne - under the guidance of our supervisor.
           </p>
         </Reveal>
 

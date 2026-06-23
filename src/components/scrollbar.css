@@ -12,7 +12,7 @@
 .scrollthumb:hover { width: 8px; }
 .scrollthumb:active { cursor: grabbing; width: 8px; }
 
-/* on touch / small screens the OS handles scrolling — hide our custom thumb */
+/* on touch / small screens the OS handles scrolling - hide our custom thumb */
 @media (max-width: 768px), (pointer: coarse) {
   .scrollthumb { display: none !important; }
 }

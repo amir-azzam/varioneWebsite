@@ -32,7 +32,7 @@
 .oled-batt { opacity: 0.7; }
 /* clip window: fixed visible area. The track inside is moved via translateY in
    JS to keep the selected row on screen. overflow:hidden everywhere (not scroll)
-   so the tiny OLED never traps page finger-scroll on iOS — and because iOS
+   so the tiny OLED never traps page finger-scroll on iOS - and because iOS
    ignores programmatic scrollTop here, we never relied on it. */
 .oled-list {
   list-style: none; margin: 0; padding: 0; font-size: 0.8rem;
@@ -48,6 +48,8 @@
 .oled-list li.sel { background: var(--cyan-soft); color: #02060f; font-weight: 700; }
 .oled-soon { margin-left: auto; font-size: 0.6rem; opacity: 0.6; }
 .oled-list li.sel .oled-soon { opacity: 0.8; }
+.oled-debrief { opacity: 0.85; color: var(--cyan-soft); font-weight: 700; }
+.oled-list li.sel .oled-debrief { color: #02060f; opacity: 1; }
 
 .oled-demo { display: flex; gap: 8px; align-items: center; height: 100%; }
 .oled-vemo { flex: 0 0 auto; }

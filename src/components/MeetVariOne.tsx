@@ -8,11 +8,11 @@ import { Device3D } from "./Device3D";
 import "./meet.css";
 
 // Touch devices have no hover, so below this width we switch the signal list to a
-// tap-driven layout (accordion or cards — a toggle lets us pick the keeper).
+// tap-driven layout (accordion or cards - a toggle lets us pick the keeper).
 function useIsMobile() {
   const [m, setM] = useState(false);
   useEffect(() => {
-    // touch OR narrow — so a phone keeps the tap layout even when zoomed out
+    // touch OR narrow - so a phone keeps the tap layout even when zoomed out
     // (zooming out widens the CSS viewport and would otherwise flip to desktop).
     const mq = window.matchMedia("(max-width: 760px), (pointer: coarse)");
     const on = () => setM(mq.matches);

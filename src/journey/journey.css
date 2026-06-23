@@ -1,4 +1,4 @@
-/* Build-journey page — THEATER layout. Tokens and shared classes (.section,
+/* Build-journey page - THEATER layout. Tokens and shared classes (.section,
    .wrap, .reveal, .eyebrow, .lead, .card, .btn, .tag) come from the global
    index.css; only journey-specific layout lives here. */
 
@@ -18,7 +18,7 @@
     var(--bg);
 }
 /* Stacked: big video on top, a SHRUNK morale strip (so Vemo's ride stays visible
-   while watching), chapters, then the landscape report — all sized to fit one
+   while watching), chapters, then the landscape report - all sized to fit one
    screen together. Wider than the global .wrap so the video can breathe. */
 .jv-theater-wrap {
   width: 94vw; max-width: 1500px; margin: 0 auto;

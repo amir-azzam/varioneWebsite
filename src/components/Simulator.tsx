@@ -54,8 +54,13 @@ function OledMenu({ view }: { view: Extract<View, { kind: "menu" }> }) {
           {view.nodes.map((n, i) => (
             <li key={n.id} ref={i === view.index ? selRef : undefined} className={i === view.index ? "sel" : ""}>
               <span className="caret">{i === view.index ? ">" : " "}</span>{n.label}
-              {n.status === "planned" && <span className="oled-soon">soon</span>}
-              {n.status === "progress" && <span className="oled-soon">wip</span>}
+              {n.demo?.debriefId ? (
+                <span className="oled-soon oled-debrief">debrief</span>
+              ) : n.status === "planned" ? (
+                <span className="oled-soon">soon</span>
+              ) : n.status === "progress" ? (
+                <span className="oled-soon">wip</span>
+              ) : null}
             </li>
           ))}
         </ul>

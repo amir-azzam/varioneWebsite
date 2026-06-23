@@ -1,7 +1,7 @@
 // Device content model for the simulator.
 // The menu tree mirrors the real firmware (top menu + submenus from the device
-// feature recap). Every runnable demo is a SAFE, scripted animation — no real
-// radios — plus a plain-language lesson. Attack-class features also carry an
+// feature recap). Every runnable demo is a SAFE, scripted animation - no real
+// radios - plus a plain-language lesson. Attack-class features also carry an
 // AI-style "debrief" (the device generates one on the real hardware). Keeps the
 // simulator honest while staying purely educational (awareness, not attack).
 
@@ -55,7 +55,7 @@ export const DEBRIEFS: Record<string, Debrief> = {
     feature: "USB HID Injection (BadUSB)",
     vector: "A fake USB keyboard that types by itself",
     whatHappened:
-      "A device that looked like an ordinary USB stick was plugged into a computer. It told the computer it was a keyboard and started typing a script at machine speed, far faster than any person could. Computers trust any USB keyboard without checking, so it was free to type commands the moment it was connected. In our test it wrote a full script into a file in about six seconds. No software was hacked — it was just automated typing.",
+      "A device that looked like an ordinary USB stick was plugged into a computer. It told the computer it was a keyboard and started typing a script at machine speed, far faster than any person could. Computers trust any USB keyboard without checking, so it was free to type commands the moment it was connected. In our test it wrote a full script into a file in about six seconds. No software was hacked - it was just automated typing.",
     stayingSafe: [
       "Lock your screen whenever you step away. The attack only works on an unlocked computer.",
       "Never plug in a USB device you found or don't recognise.",
@@ -70,7 +70,7 @@ export const DEBRIEFS: Record<string, Debrief> = {
     feature: "VariPortal (Credential Capture)",
     vector: "A fake copy of a real Wi-Fi network",
     whatHappened:
-      "The device made a fake copy of a real Wi-Fi network. When someone connected, they saw a login page that looked exactly like the real one and typed in the Wi-Fi password. The device checked that password against the real network, so it instantly knew whether it was correct. Nothing was 'hacked' — people simply trusted a familiar-looking page.",
+      "The device made a fake copy of a real Wi-Fi network. When someone connected, they saw a login page that looked exactly like the real one and typed in the Wi-Fi password. The device checked that password against the real network, so it instantly knew whether it was correct. Nothing was 'hacked' - people simply trusted a familiar-looking page.",
     stayingSafe: [
       "Don't type your Wi-Fi or account password into a page that pops up right after you join a network.",
       "Check the network name carefully. A lookalike network copies it exactly, so watch for duplicates.",
@@ -103,7 +103,7 @@ export const DEBRIEFS: Record<string, Debrief> = {
     stayingSafe: [
       "Turn on WPA3, or WPA2 with Protected Management Frames (802.11w). It blocks these fake disconnects.",
       "Where you can, move important devices to a 5 GHz network.",
-      "If your Wi-Fi keeps dropping for no clear reason, jamming or a deauth attack could be the cause — worth investigating.",
+      "If your Wi-Fi keeps dropping for no clear reason, jamming or a deauth attack could be the cause - worth investigating.",
     ],
     closing:
       "A network that can't tell a real disconnect from a fake one will believe the attacker. Modern Wi-Fi fixes exactly that.",
@@ -113,24 +113,24 @@ export const DEBRIEFS: Record<string, Debrief> = {
     feature: "Sub-GHz RF Jammer",
     vector: "Noise flooded onto a remote's frequency (e.g. 433 MHz)",
     whatHappened:
-      "The device flooded a frequency like 433 MHz with noise. Car keys, garage remotes and similar gadgets all talk on these bands, so while the noise is on, the real remote can't be heard and simply stops working. Nothing is broken — the real signal is just drowned out.",
+      "The device flooded a frequency like 433 MHz with noise. Car keys, garage remotes and similar gadgets all talk on these bands, so while the noise is on, the real remote can't be heard and simply stops working. Nothing is broken - the real signal is just drowned out.",
     stayingSafe: [
       "If your car remote or gate suddenly stops working in one spot, you may be near a jammer. Lock the car manually and check every door before walking away.",
       "Prefer gear that uses rolling codes and warns you about tampering.",
       "Jamming is illegal outside authorised testing. This is shown only to explain the risk.",
     ],
     closing:
-      "A jammer doesn't steal anything — it just makes sure your 'lock' button is never heard. Always confirm the car actually locked.",
+      "A jammer doesn't steal anything - it just makes sure your 'lock' button is never heard. Always confirm the car actually locked.",
   },
   nrfjam: {
     id: "nrfjam",
     feature: "2.4 GHz (nRF24) Jammer",
     vector: "Noise flooded across the 2.4 GHz band",
     whatHappened:
-      "The device flooded the 2.4 GHz band — the same space used by Bluetooth, Wi-Fi, and the little dongles that come with wireless mice and keyboards. By raising the noise across many channels at once, the targets can't hear their own signal. In testing, Bluetooth speakers and earbuds distorted and then cut out, and wireless mice and keyboards stopped responding.",
+      "The device flooded the 2.4 GHz band - the same space used by Bluetooth, Wi-Fi, and the little dongles that come with wireless mice and keyboards. By raising the noise across many channels at once, the targets can't hear their own signal. In testing, Bluetooth speakers and earbuds distorted and then cut out, and wireless mice and keyboards stopped responding.",
     stayingSafe: [
       "For anything that matters (a presentation, a security keypad) prefer a wired connection.",
-      "Remember that Bluetooth and 2.4 GHz wireless can be disrupted by someone nearby — keep a backup.",
+      "Remember that Bluetooth and 2.4 GHz wireless can be disrupted by someone nearby - keep a backup.",
       "Jamming is illegal outside authorised testing. This is shown only to explain the risk.",
     ],
     closing:
@@ -141,24 +141,24 @@ export const DEBRIEFS: Record<string, Debrief> = {
     feature: "Contactless Card Read (EMV)",
     vector: "Quietly reading a tap-to-pay card from a few centimetres away",
     whatHappened:
-      "A contactless bank card was held near the device's coil. The card answered the moment it had power, the same way it answers a shop's payment terminal, and it returned a few public details: the card number with everything but the last four digits hidden (**** **** **** 1234), the expiry date, and sometimes the issuer or network. No PIN, no security code (CVV), and no full number were exposed, because the card simply doesn't hand those over to a plain read. Nothing was 'hacked' — the card just replied to a reader that got close enough.",
+      "A contactless bank card was held near the device's coil. The card answered the moment it had power, the same way it answers a shop's payment terminal, and it returned a few public details: the card number with everything but the last four digits hidden (**** **** **** 1234), the expiry date, and sometimes the issuer or network. No PIN, no security code (CVV), and no full number were exposed, because the card simply doesn't hand those over to a plain read. Nothing was 'hacked' - the card just replied to a reader that got close enough.",
     stayingSafe: [
       "Not every card responds, and that's normal. Some need a moment of field power to wake, some only reveal details after the full terminal handshake (3-D Secure), and a foil-lined or anti-skim sleeve, an awkward angle, or a phone wallet with a dead battery can stop the read entirely.",
       "Keep tap-to-pay cards in an RFID-blocking sleeve or wallet so a stranger can't get a casual read in a crowd.",
-      "The real risk here is low — a tap leaks only public, masked details — but it's a good reminder to know your contactless limit and to check your statements.",
+      "The real risk here is low - a tap leaks only public, masked details - but it's a good reminder to know your contactless limit and to check your statements.",
     ],
     closing:
-      "A tap leaks less than people fear, but more than they expect. Knowing exactly what's exposed is the point: masked number, expiry, sometimes the issuer — never your PIN or CVV.",
+      "A tap leaks less than people fear, but more than they expect. Knowing exactly what's exposed is the point: masked number, expiry, sometimes the issuer - never your PIN or CVV.",
   },
   keyfob: {
     id: "keyfob",
     feature: "Key Fob Inspect",
     vector: "Capturing a remote twice to tell fixed-code from rolling-code",
     whatHappened:
-      "A key fob was pressed once, then pressed again, and the device compared the two signals. If the code is identical both times, the fob is 'fixed-code' — record it once and you can replay it forever, which is the same weakness old gates and cheap remotes have. If the code changes every press, the fob is 'rolling-code': a shared counter (often KeeLoq) advances on each press, and the receiver rejects any code it has already seen, so a captured signal is useless tomorrow.",
+      "A key fob was pressed once, then pressed again, and the device compared the two signals. If the code is identical both times, the fob is 'fixed-code' - record it once and you can replay it forever, which is the same weakness old gates and cheap remotes have. If the code changes every press, the fob is 'rolling-code': a shared counter (often KeeLoq) advances on each press, and the receiver rejects any code it has already seen, so a captured signal is useless tomorrow.",
     stayingSafe: [
       "Prefer remotes and cars that use rolling codes. Modern car keys already do this; the cheapest fixed-code fobs and old gate remotes don't.",
-      "If a fob turns out to be fixed-code, treat its signal like a spare key — anyone who records it once can reuse it.",
+      "If a fob turns out to be fixed-code, treat its signal like a spare key - anyone who records it once can reuse it.",
       "When buying a gate or garage remote, ask for rolling-code (hopping-code) and avoid the bargain fixed-code ones.",
     ],
     closing:
@@ -324,7 +324,7 @@ const nfcBank: Demo = {
     { mood: "success", title: "EMV Reader", lines: ["**** **** **** 1234", "exp 09/27  Meeza"], ms: 2300 },
   ],
   lesson: {
-    what: "The device read a contactless bank card from a few centimetres away and showed only the masked number (last 4 digits), the expiry, and sometimes the issuer. The full number is never stored or shown — it's masked the moment it's read.",
+    what: "The device read a contactless bank card from a few centimetres away and showed only the masked number (last 4 digits), the expiry, and sometimes the issuer. The full number is never stored or shown - it's masked the moment it's read.",
     why: "Cards answer any reader that gets close enough, even through a wallet. In Egypt, contactless pays up to 600 EGP with no PIN, and almost nobody knows what a tap can leak at short range. This demo poses no real risk; it just shows what's exposed.",
     defend: "Use an RFID-blocking sleeve or wallet, and keep an eye on contactless limits and your statements.",
   },
@@ -366,7 +366,7 @@ const irClone: Demo = {
     { mood: "success", title: "Remote Clone", lines: ["Remote cloned", "replaying POWER"], ms: 1800 },
   ],
   lesson: {
-    what: "You pick a device type (like an AC), and VariOne prompts you button by button — power, temperature, fan, swing. It learns each one, saves them, and can then act as a copy of that remote.",
+    what: "You pick a device type (like an AC), and VariOne prompts you button by button - power, temperature, fan, swing. It learns each one, saves them, and can then act as a copy of that remote.",
     why: "Infrared remotes send simple, unprotected codes. Anything with line of sight can learn and replay them, from a TV to an AC to some projectors.",
     defend: "Not much to defend for a TV, but be aware IR isn't private. For anything sensitive, don't rely on IR alone.",
   },
@@ -424,7 +424,7 @@ const badusb: Demo = {
   ],
   lesson: {
     what: "The device pretended to be an ordinary USB keyboard. The moment it was plugged into an unlocked computer, it typed a scripted set of keystrokes by itself, far faster than any human, with no click or confirmation.",
-    why: "Computers trust any USB keyboard implicitly. A device that claims to be a keyboard can run commands the instant it's plugged in, as long as the screen is unlocked. No software exploit is involved — just automated typing.",
+    why: "Computers trust any USB keyboard implicitly. A device that claims to be a keyboard can run commands the instant it's plugged in, as long as the screen is unlocked. No software exploit is involved - just automated typing.",
     defend: "Lock your screen when you step away, never plug in unknown USB devices, and use USB/HID allowlisting to block unapproved keyboards.",
   },
   debriefId: "badusb",

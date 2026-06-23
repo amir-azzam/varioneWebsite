@@ -1,17 +1,17 @@
 // Single source of truth for the build-journey timeline.
 //
 // Now ALIGNED TO THE BUILD VIDEO. Each node's `videoTime` is the second in the
-// cut (public/assets/journey.mp4) where that beat begins — read off the video's
+// cut (public/assets/journey.mp4) where that beat begins - read off the video's
 // own dated caption cards. The page and the video move together: when the video
 // reaches a node's videoTime, that node activates, its colored text reveals, and
 // Vemo rides the morale curve to that point. The video is the master clock; the
 // page is scroll-driven only as a fallback (no video / reduced motion).
 //
-// curveY = morale 0-100 — the emotional spine. The dip is the broken screen +
+// curveY = morale 0-100 - the emotional spine. The dip is the broken screen +
 // the month-long bug hunt (May); the peak is "NRF FINALLY WORKING" + the first
 // website launch (mid-June).
 //
-// videoTime is PROVISIONAL — derived from the current cut. The final cut adds
+// videoTime is PROVISIONAL - derived from the current cut. The final cut adds
 // voiceover + a blooper tail (~10-20s longer) but the main content/order is
 // unchanged, so only small nudges (or the dev capture mode, ?capture) are needed
 // to re-stamp these. Bloopers play past the last node without moving the morale.
@@ -45,14 +45,14 @@ export const JOURNEY_NODES: JourneyNode[] = [
     curveY: 38,
     videoTime: 0,
     lede:
-      "It started as an idea and a blank repository: a friendly handheld that could make invisible wireless signals visible, so anyone could learn how they work. Before a single radio worked, we wrote the spec, formed the team, and gave the device a face — Vemo. It felt slow because it was, but the project officially existed.",
+      "It started as an idea and a blank repository: a friendly handheld that could make invisible wireless signals visible, so anyone could learn how they work. Before a single radio worked, we wrote the spec, formed the team, and gave the device a face - Vemo. It felt slow because it was, but the project officially existed.",
     broke: [
-      "A blank slate — all planning, no firmware on hardware yet",
+      "A blank slate - all planning, no firmware on hardware yet",
       "The spec churned constantly: PRD, briefs, scope rewritten",
-      "Eight people, one device, and no shared muscle memory yet",
+      "A fresh team, one device, and no shared muscle memory yet",
     ],
     won: [
-      "First commit landed — the project officially existed",
+      "First commit landed - the project officially existed",
       "Wrote a 1,200-line PRD as our single source of truth",
       "Vemo the mascot born; the team of eight assembled",
     ],
@@ -71,7 +71,7 @@ export const JOURNEY_NODES: JourneyNode[] = [
       "We made our first run to the hardware store and wired the very first prototype on a breadboard. Rather than start from a blank file, we forked VariOne-S3 off the open-source Bruce baseline and earned it line by line. By April 23 the first real RF and NFC reads were coming back successful.",
     broke: [
       "A huge inherited Bruce codebase we hadn't written ourselves",
-      "Bruce targets generic ESP32 — our S3 board needed its own port",
+      "Bruce targets generic ESP32 - our S3 board needed its own port",
       "First wiring was guesswork; every jumper a small experiment",
     ],
     won: [
@@ -91,7 +91,7 @@ export const JOURNEY_NODES: JourneyNode[] = [
     curveY: 60,
     videoTime: 72,
     lede:
-      "Within days the device started doing real things. We verified first-time SD-card data logging, ran initial packet sniffing, deployed the first evil-twin network simulation, and validated a stable UI screen we could finally trust. General WiFi testing, all green — the thing was alive.",
+      "Within days the device started doing real things. We verified first-time SD-card data logging, ran initial packet sniffing, deployed the first evil-twin network simulation, and validated a stable UI screen we could finally trust. General WiFi testing, all green - the thing was alive.",
     broke: [
       "Early UI was flaky until we validated it screen by screen",
       "Signal storage needed proving before we could trust captures",
@@ -115,9 +115,9 @@ export const JOURNEY_NODES: JourneyNode[] = [
     curveY: 26,
     videoTime: 138,
     lede:
-      "Then the screen broke “for some reason” — the start of the project's longest bug-hunt: a shared SPI bus eating itself, an AP that swore it was alive but broadcast nothing, a web server that wouldn't rebind. It worked later, but it cost us weeks.",
+      "Then the screen broke “for some reason” - the start of the project's longest bug-hunt: a shared SPI bus eating itself, an AP that swore it was alive but broadcast nothing, a web server that wouldn't rebind. It worked later, but it cost us weeks.",
     broke: [
-      "Display died “for some reason” — and stayed dead",
+      "Display died “for some reason” - and stayed dead",
       "AP reported 20 dBm but never broadcast its SSID",
       "Bad WiFi state stuck in NVS, surviving every reflash",
       "Port 80 wouldn't rebind after teardown (bind -8)",
@@ -140,16 +140,16 @@ export const JOURNEY_NODES: JourneyNode[] = [
     curveY: 56,
     videoTime: 165,
     lede:
-      "We carried the new setup to Dr. Gaber for the first time — nervous, half-sure it would freeze on cue — and walked out with positive feedback. It was the moment the morale turned: the direction was right, and someone we trusted said so.",
+      "We carried the new setup to Dr. Ahmed for the first time - nervous, half-sure it would freeze on cue - and walked out with positive feedback. It was the moment the morale turned: the direction was right, and someone we trusted said so.",
     broke: [
-      "Still fragile — some features were held together by hope",
+      "Still fragile - some features were held together by hope",
       "Demo-day nerves: would it freeze the moment it mattered?",
       "No second chances to make a first impression",
     ],
     won: [
       "First full demo to the supervisor went through",
-      "Positive feedback from Dr. Gaber on the new setup",
-      "The direction was validated — momentum returned",
+      "Positive feedback from Dr. Ahmed on the new setup",
+      "The direction was validated - momentum returned",
     ],
     moments: ["first supervisor demo", "positive feedback", "direction validated"],
     stat: { label: "supervisor verdict", value: "positive" },
@@ -163,7 +163,7 @@ export const JOURNEY_NODES: JourneyNode[] = [
     curveY: 90,
     videoTime: 190,
     lede:
-      'The wall we kept walking into for a month finally gave. We dropped below the Arduino API into the ESP32 framework source and found the real culprit — a peripheral manager silently tearing down the screen’s SPI bus the instant the radio grabbed a shared pin. We isolated the radio onto SPI3 with raw GPIO wiring; the screen lived, the SD mounted, and the jam cut a real Bluetooth headset dead. The attack-debrief feature landed and we launched the first version of the website. The commit is literally titled "NRF FINALLY WORKING."',
+      'The wall we kept walking into for a month finally gave. We dropped below the Arduino API into the ESP32 framework source and found the real culprit - a peripheral manager silently tearing down the screen’s SPI bus the instant the radio grabbed a shared pin. We isolated the radio onto SPI3 with raw GPIO wiring; the screen lived, the SD mounted, and the jam cut a real Bluetooth headset dead. The attack-debrief feature landed and we launched the first version of the website. The commit is literally titled "NRF FINALLY WORKING."',
     broke: [
       "Turning on the NRF24 radio instantly froze the TFT screen",
       'The same bug, masked as freeze, then crash, then "chip not found"',
@@ -188,7 +188,7 @@ export const JOURNEY_NODES: JourneyNode[] = [
     curveY: 95,
     videoTime: 240,
     lede:
-      "With the hard part behind us, the device got its personality. BadUSB and HID typing real payloads, the Vemo loading screen and a full on-device UI revamp, an AI debrief that writes itself in plain language — the polish that turned a breadboard into VariOne.",
+      "With the hard part behind us, the device got its personality. BadUSB and HID typing real payloads, the Vemo loading screen and a full on-device UI revamp, an AI debrief that writes itself in plain language - the polish that turned a breadboard into VariOne.",
     broke: [
       "Stale NVS kept broadcasting 'BruceNet' after we changed the default",
       "Cloud AI failed on hardware: only ~31KB contiguous heap, no PSRAM",
@@ -205,6 +205,6 @@ export const JOURNEY_NODES: JourneyNode[] = [
   },
 ];
 
-// The video's cue points are DERIVED from the nodes above — no second source to
+// The video's cue points are DERIVED from the nodes above - no second source to
 // keep in sync. The video-sync hook reads these.
 export const VIDEO_CUES = JOURNEY_NODES.map((n) => ({ nodeId: n.id, time: n.videoTime }));

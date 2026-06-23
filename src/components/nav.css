@@ -1,4 +1,4 @@
-/* nav — floats over the hero, glass-blurs into a solid bar once you scroll.
+/* nav - floats over the hero, glass-blurs into a solid bar once you scroll.
    Shared by the home page and the journey page (see Nav.tsx). */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
@@ -40,11 +40,11 @@
 }
 .nav-link:not(.nav-link--cta):hover { color: var(--cyan); }
 .nav-link:not(.nav-link--cta):hover::after { transform: scaleX(1); }
-/* button reset — but keep .nav-link's font-family/size/weight so it matches the
+/* button reset - but keep .nav-link's font-family/size/weight so it matches the
    "The device" / "Real device" links exactly */
 .nav-link--btn { background: none; border: none; padding: 0; cursor: pointer; }
 
-/* CTA — glowing pill */
+/* CTA - glowing pill */
 .nav-link--cta {
   color: #042036; font-weight: 700;
   background: linear-gradient(180deg, var(--cyan), var(--blue));
@@ -56,7 +56,7 @@
 .nav-link--cta:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(41, 199, 246, 0.45); filter: brightness(1.05); }
 .nav-link--cta:active { transform: translateY(0); }
 
-/* hamburger — hidden on desktop */
+/* hamburger - hidden on desktop */
 .nav-burger {
   display: none; flex-direction: column; gap: 5px;
   background: none; border: 0; cursor: pointer; padding: 8px; margin-right: -8px;

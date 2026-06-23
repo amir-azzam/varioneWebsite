@@ -1,7 +1,7 @@
 // The sync engine: binds the build video's playback clock to the timeline.
 //
 // When enabled, every timeupdate computes which node is active (the last node
-// whose videoTime has passed), the overall progress (0..1), and the raw clock —
+// whose videoTime has passed), the overall progress (0..1), and the raw clock -
 // and hands them up. The video is the master clock; JourneyApp turns these into
 // the active chapter, the morale rider position, and the readout. Disabled (no
 // video) → the page falls back to chapter buttons / scroll.

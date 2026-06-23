@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import "./nav.css";
 
 // The physical VariOne serves its own control panel on the local network at
-// http://varione.local — link straight to it from the nav.
+// http://varione.local - link straight to it from the nav.
 const DEVICE_WEBUI = "http://varione.local";
 
-// Shared site nav — used on the home page and the journey page. Section links are
+// Shared site nav - used on the home page and the journey page. Section links are
 // absolute (/#meet, /#simulator) so they work from /journey/ too, jumping back to
 // the home page and scrolling to the section. `current` marks which page we're on
 // so its own link is hidden (you don't link to the page you're already on).

@@ -22,7 +22,7 @@
     linear-gradient(180deg, rgba(3,7,15,0.6) 0%, transparent 20%, transparent 48%, rgba(3,7,15,0.92) 100%),
     linear-gradient(90deg, rgba(3,7,15,0.75) 0%, transparent 55%);
 }
-/* fine film grain over the video — masks the soft/low-res look as cinematic
+/* fine film grain over the video - masks the soft/low-res look as cinematic
    texture, and costs no video file size (pure CSS SVG noise). */
 .hero-grain {
   position: absolute; inset: 0; z-index: 1;
@@ -69,7 +69,7 @@
 }
 @keyframes scrolldot { 0%,100% { opacity: 0; transform: translate(-50%, 0); } 50% { opacity: 1; transform: translate(-50%, 10px); } }
 
-/* the scroll cue can collide with the CTA buttons on small or short screens —
+/* the scroll cue can collide with the CTA buttons on small or short screens -
    it's decorative, so hide it there. */
 @media (max-width: 768px), (max-height: 640px) {
   .hero-scroll { display: none; }

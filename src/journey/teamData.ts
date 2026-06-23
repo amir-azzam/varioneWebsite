@@ -1,7 +1,7 @@
 // The team behind VariOne. Names + IDs are from the graduation document's
 // official roster (8 members + supervisor). Roles are best-effort from the doc's
 // team-structure table (Technical lead + hardware/firmware ×2, Website & Planning,
-// Documentation & Review, Marketing, Logistics) — tune any role that's off.
+// Documentation & Review, Marketing, Logistics) - tune any role that's off.
 // Avatars use Vemo mascot moods since we don't ship member photos here.
 
 import type { VemoMood } from "./Vemo";

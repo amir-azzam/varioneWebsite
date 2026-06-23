@@ -41,7 +41,7 @@ function recordSend() {
     list.push(Date.now());
     localStorage.setItem(RL_KEY, JSON.stringify(list));
   } catch {
-    /* storage blocked — fall back to no client-side limit */
+    /* storage blocked - fall back to no client-side limit */
   }
 }
 
@@ -53,7 +53,7 @@ export function ContactModal({ open, onClose }: { open: boolean; onClose: () => 
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [why, setWhy] = useState("");
-  const [trap, setTrap] = useState(""); // honeypot — stays empty for real users
+  const [trap, setTrap] = useState(""); // honeypot - stays empty for real users
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -81,7 +81,7 @@ export function ContactModal({ open, onClose }: { open: boolean; onClose: () => 
     setError("");
 
     // Honeypot: bots fill every field. A real (hidden) field that has text
-    // means a bot — pretend it worked, but send nothing.
+    // means a bot - pretend it worked, but send nothing.
     if (trap) { setSent(true); return; }
 
     // Rate limit: enforce a cooldown and a daily cap per browser.

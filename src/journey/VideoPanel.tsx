@@ -1,10 +1,10 @@
-// The theater video — the centerpiece of the journey stage. Custom controls
+// The theater video - the centerpiece of the journey stage. Custom controls
 // (play/pause, scrubber, time, mute) so it reads like a cinema panel, not a raw
 // browser player. The build video drives the whole page, so its clock is the
 // product; these controls just expose it.
 //
 // The cut is NOT final (voiceover + a blooper tail still coming), so the badge
-// stays — it never claims to be silent, since the current cut already narrates
+// stays - it never claims to be silent, since the current cut already narrates
 // some parts with on-screen captions.
 
 import { useEffect, useRef, useState } from "react";
@@ -63,7 +63,7 @@ export function VideoPanel({
     if (document.fullscreenElement) { void document.exitFullscreen?.(); return; }
     // Standard fullscreen on the figure (desktop + Android Chrome).
     if (el.requestFullscreen) { void el.requestFullscreen(); return; }
-    // iOS Safari (iPhone) can't fullscreen arbitrary elements — only the <video>
+    // iOS Safari (iPhone) can't fullscreen arbitrary elements - only the <video>
     // itself, via the webkit API. This is what makes the button work on mobile.
     const v = videoRef.current as (HTMLVideoElement & {
       webkitEnterFullscreen?: () => void;
@@ -120,7 +120,7 @@ export function VideoPanel({
       {mode === "idle" && (
         <button className="jv-poster-cover" onClick={onPlay} aria-label="Play the build journey">
           <span className="jv-poster-title">{title}</span>
-          <span className="jv-poster-sub">The VariOne build journey — press play</span>
+          <span className="jv-poster-sub">The VariOne build journey - press play</span>
           <span className="jv-bigplay" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
           </span>
@@ -130,7 +130,7 @@ export function VideoPanel({
       {/* Replay when finished */}
       {ended && (
         <button className="jv-poster-cover jv-poster-cover--end" onClick={onReplay} aria-label="Replay">
-          <span className="jv-poster-sub">That's the journey — scroll down to meet the team</span>
+          <span className="jv-poster-sub">That's the journey - scroll down to meet the team</span>
           <span className="jv-bigplay" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 5V1L7 6l5 5V7a6 6 0 11-6 6H4a8 8 0 108-8z" /></svg>
           </span>

@@ -79,7 +79,7 @@ export default function App() {
   // Absolute path so it always lands at the site root (never compounds).
   const openAcademy = () => { window.location.href = "/vemo/"; };
 
-  // Open the contact form when we arrive at /#contact — lets pages that can't drive
+  // Open the contact form when we arrive at /#contact - lets pages that can't drive
   // React state (the static Academy nav) link here to pop the form.
   useEffect(() => {
     const openIfContact = () => { if (window.location.hash === "#contact") setContactOpen(true); };

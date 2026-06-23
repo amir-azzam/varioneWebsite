@@ -1,4 +1,4 @@
-// Chapter rail — one pill per node. Shows where we are and lets you jump: click
+// Chapter rail - one pill per node. Shows where we are and lets you jump: click
 // seeks the video to that chapter (and, with no video, just sets the chapter).
 // Doubles as the no-video fallback navigation.
 
@@ -21,7 +21,7 @@ export function ChapterRail({
           className={`jv-chapter ${i === activeIndex ? "is-active" : ""} ${i < activeIndex ? "is-done" : ""}`}
           onClick={() => onSelect(i)}
           aria-current={i === activeIndex ? "true" : undefined}
-          title={`${n.period} — ${n.headline}`}
+          title={`${n.period} - ${n.headline}`}
         >
           <span className="jv-chapter-dot" />
           <span className="jv-chapter-label">{n.period}</span>

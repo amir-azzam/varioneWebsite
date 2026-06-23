@@ -1,4 +1,4 @@
-/* Contact modal — brand-matched form over a dimmed, blurred page. */
+/* Contact modal - brand-matched form over a dimmed, blurred page. */
 
 .modal-backdrop {
   position: fixed;
@@ -91,7 +91,7 @@
   color: var(--bad);
 }
 
-/* Honeypot — pushed off-screen so people never see it, but bots still fill it. */
+/* Honeypot - pushed off-screen so people never see it, but bots still fill it. */
 .hp-field {
   position: absolute !important;
   left: -9999px !important;

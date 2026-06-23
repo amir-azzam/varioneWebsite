@@ -1,13 +1,13 @@
-// Build-journey page root — THEATER mode. A big stage fills the screen: the build
+// Build-journey page root - THEATER mode. A big stage fills the screen: the build
 // video (~60%) beside the morale curve + the synced chapter readout (~40%). The
-// video is the master clock — on load it autoplays muted (with a "tap for sound"
+// video is the master clock - on load it autoplays muted (with a "tap for sound"
 // nudge), and as it plays the active chapter, the colored "what broke / what we
 // won" text, and Vemo riding the morale curve all move with it. No video (or
 // autoplay blocked) → the chapter rail drives everything by click. The team
 // section closes the page.
 //
 // Dev: open /journey/?capture to stamp each chapter's videoTime against the final
-// cut in seconds — makes re-syncing the timeline a 2-minute job.
+// cut in seconds - makes re-syncing the timeline a 2-minute job.
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ScrollBar } from "../components/ScrollBar";
@@ -87,10 +87,10 @@ export default function JourneyApp() {
   const play = useCallback(() => {
     const v = videoRef.current;
     if (!v) return;
-    // First play from the poster is a user gesture — give them sound.
+    // First play from the poster is a user gesture - give them sound.
     if (mode === "idle") { v.muted = false; setMuted(false); }
     if (ended) { v.currentTime = 0; setEnded(false); }
-    // play() rejects with AbortError if interrupted by a later pause()/seek —
+    // play() rejects with AbortError if interrupted by a later pause()/seek -
     // expected during rapid chapter/pause clicks, so swallow it (state is driven
     // by the play/pause/ended listeners regardless).
     v.play()?.catch(() => {});
