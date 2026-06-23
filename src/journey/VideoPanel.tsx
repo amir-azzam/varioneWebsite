@@ -60,8 +60,17 @@ export function VideoPanel({
   const toggleFs = () => {
     const el = figRef.current;
     if (!el) return;
-    if (document.fullscreenElement) void document.exitFullscreen?.();
-    else void el.requestFullscreen?.();
+    if (document.fullscreenElement) { void document.exitFullscreen?.(); return; }
+    // Standard fullscreen on the figure (desktop + Android Chrome).
+    if (el.requestFullscreen) { void el.requestFullscreen(); return; }
+    // iOS Safari (iPhone) can't fullscreen arbitrary elements — only the <video>
+    // itself, via the webkit API. This is what makes the button work on mobile.
+    const v = videoRef.current as (HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+      webkitRequestFullscreen?: () => void;
+    }) | null;
+    if (v?.webkitEnterFullscreen) { v.webkitEnterFullscreen(); return; }
+    if (v?.webkitRequestFullscreen) { v.webkitRequestFullscreen(); }
   };
 
   const seekFromEvent = (e: React.MouseEvent<HTMLDivElement>) => {
