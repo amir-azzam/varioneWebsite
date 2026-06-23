@@ -43,6 +43,7 @@ function Nav({ onContact }: { onContact: () => void }) {
 
         <nav className="nav-menu">
           <a href="#meet" className="nav-link" onClick={close}>Device</a>
+          <a href="/journey/" className="nav-link" onClick={close}>The Journey</a>
           <a href={DEVICE_WEBUI} className="nav-link" target="_blank" rel="noreferrer" onClick={close}>
             Real device
           </a>

@@ -1,0 +1,278 @@
+/* Build-journey page — THEATER layout. Tokens and shared classes (.section,
+   .wrap, .reveal, .eyebrow, .lead, .card, .btn, .tag) come from the global
+   index.css; only journey-specific layout lives here. */
+
+/* ---- base mascot image ---- */
+.jv-vemo { display: block; height: auto; max-width: 100%; -webkit-user-drag: none; user-select: none; }
+
+/* ---- top bar ---- */
+.jv-topbar {
+  position: sticky; top: 0; z-index: 40;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(180deg, rgba(3,7,15,0.92), rgba(3,7,15,0.66));
+  border-bottom: 1px solid var(--line);
+  transition: transform .35s ease, margin-top .35s ease, opacity .35s ease;
+}
+/* slide up + pull following content up (reclaim the 57px) once the video plays
+   or we scroll a little — more room for the stage. */
+.jv-topbar.is-hidden { transform: translateY(-100%); margin-top: -57px; opacity: 0; pointer-events: none; }
+.jv-topbar-inner { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+.jv-home { display: inline-flex; align-items: center; gap: 10px; color: var(--white); font-weight: 700; }
+.jv-home img { height: 24px; width: auto; filter: drop-shadow(0 2px 10px rgba(41,199,246,0.4)); }
+.jv-home:hover { color: var(--cyan); }
+
+/* ---- theater stage ---- */
+.jv-theater {
+  min-height: 100vh;
+  display: flex; align-items: flex-start;
+  padding: 26px 0 22px;
+  background:
+    radial-gradient(120% 80% at 80% -10%, rgba(41,199,246,0.12), transparent 60%),
+    radial-gradient(90% 70% at 0% 110%, rgba(35,141,219,0.12), transparent 55%),
+    var(--bg);
+}
+/* Stacked: big video on top, a SHRUNK morale strip (so Vemo's ride stays visible
+   while watching), chapters, then the landscape report — all sized to fit one
+   screen together. Wider than the global .wrap so the video can breathe. */
+.jv-theater-wrap {
+  width: 94vw; max-width: 1500px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  grid-template-areas:
+    "video  report"
+    "morale report";
+  grid-template-rows: auto auto;
+  gap: 12px 18px; align-items: start;
+}
+.jv-stage-screen { grid-area: video; display: flex; justify-content: center; }
+/* report on the right spans the full height of the video+morale stack, so its
+   text can run as long as it needs without overflowing the screen. */
+.jv-read { grid-area: report; align-self: start; }
+/* keep the morale + chapters narrower than the (wide) video so the curve isn't
+   stretched flat; centered under the video. */
+.jv-side { grid-area: morale; display: flex; flex-direction: column; gap: 12px; min-width: 0; width: 100%; max-width: 760px; margin: 0 auto; }
+
+/* ---- the screen ---- */
+.jv-screen {
+  position: relative; margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  /* fills the left column, height-capped so the video + morale stack still fits
+     a screen (the report runs alongside it on the right). 16:9, never cropped. */
+  width: min(100%, calc(60vh * 16 / 9));
+  border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--line);
+  background: #03070f;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(103,233,255,0.05);
+}
+.jv-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #03070f; cursor: pointer; z-index: 0; }
+/* native fullscreen: fill the screen, show the whole frame (no crop) */
+.jv-screen:fullscreen { width: 100vw; height: 100vh; max-width: none; aspect-ratio: auto; border: 0; border-radius: 0; margin: 0; }
+.jv-screen:fullscreen .jv-video { object-fit: contain; }
+.jv-screen-grain {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* poster / end cover */
+.jv-poster-cover {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  border: 0; cursor: pointer; color: var(--white); text-align: center; padding: 24px;
+  background: linear-gradient(180deg, rgba(3,7,15,0.55), rgba(3,7,15,0.75));
+  font-family: inherit;
+}
+.jv-poster-cover--end { background: linear-gradient(180deg, rgba(3,7,15,0.7), rgba(3,7,15,0.85)); }
+.jv-poster-title {
+  font-family: var(--display); font-weight: 700; letter-spacing: -0.02em;
+  font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+  background: linear-gradient(90deg, var(--white), var(--cyan-soft));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.jv-poster-sub { color: var(--pale); font-size: 0.98rem; max-width: 40ch; }
+.jv-bigplay {
+  margin-top: 6px; width: 66px; height: 66px; border-radius: 999px;
+  display: grid; place-items: center;
+  color: #042036; background: linear-gradient(180deg, var(--cyan), var(--blue));
+  box-shadow: 0 10px 30px rgba(41,199,246,0.5);
+}
+.jv-poster-cover:hover .jv-bigplay { transform: scale(1.06); }
+
+/* badge */
+.jv-badge {
+  position: absolute; z-index: 4; top: 12px; left: 12px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; color: var(--pale);
+  background: rgba(3,7,15,0.6); border: 1px solid var(--line); border-radius: 999px;
+  padding: 6px 12px; backdrop-filter: blur(4px);
+}
+.jv-badge-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--warn); box-shadow: 0 0 10px var(--warn); animation: jvPulse 1.8s ease-in-out infinite; }
+@keyframes jvPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+/* unmute nudge */
+.jv-unmute {
+  position: absolute; z-index: 4; top: 12px; right: 12px;
+  font-weight: 800; font-size: 0.8rem; color: #042036; cursor: pointer;
+  background: linear-gradient(180deg, var(--cyan), var(--blue));
+  border: 0; border-radius: 999px; padding: 8px 14px;
+  box-shadow: 0 8px 22px rgba(41,199,246,0.45); animation: jvPulse 2.4s ease-in-out infinite;
+}
+
+/* control bar */
+.jv-controls {
+  position: absolute; z-index: 4; left: 0; right: 0; bottom: 0;
+  display: flex; align-items: center; gap: 12px; padding: 16px 14px 12px;
+  background: linear-gradient(180deg, transparent, rgba(3,7,15,0.85));
+}
+.jv-ctrl-btn {
+  flex: 0 0 auto; width: 38px; height: 38px; border-radius: 999px;
+  display: grid; place-items: center; color: var(--white);
+  background: rgba(255,255,255,0.08); border: 1px solid var(--line); cursor: pointer;
+}
+.jv-ctrl-btn:hover { background: rgba(41,199,246,0.18); border-color: var(--cyan); }
+.jv-scrub { flex: 1 1 auto; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.16); cursor: pointer; position: relative; }
+.jv-scrub-fill { position: absolute; inset: 0 auto 0 0; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--cyan), var(--cyan-soft)); }
+.jv-time { font-family: var(--mono); font-size: 0.78rem; color: var(--pale); min-width: 84px; text-align: right; }
+
+/* chapter rail */
+/* narrow enough to wrap the 7 chapters onto two rows instead of one stretched line */
+.jv-chapters { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 480px; margin: 0 auto; }
+.jv-chapter {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 0.76rem; font-weight: 700; color: var(--muted); cursor: pointer;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 999px;
+  padding: 5px 11px; transition: color .2s, border-color .2s, background .2s;
+}
+.jv-chapter-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--bg); border: 2px solid var(--line); }
+.jv-chapter:hover { color: var(--pale); border-color: var(--cyan); }
+.jv-chapter.is-done .jv-chapter-dot { background: var(--cyan); border-color: var(--cyan); }
+.jv-chapter.is-active { color: var(--white); border-color: var(--cyan); background: rgba(41,199,246,0.12); }
+.jv-chapter.is-active .jv-chapter-dot { background: var(--cyan-soft); border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(41,199,246,0.18); }
+
+/* ---- morale curve + rider ---- */
+.jv-curve {
+  position: relative; width: 100%;
+  /* a fixed strip below the video; full width of the left column so the dip/peak
+     still read. The SVG uses preserveAspectRatio="none" so it stretches to fill
+     and the rider %s stay exact regardless of box shape. */
+  height: clamp(150px, 22vh, 250px); aspect-ratio: auto; flex: 0 0 auto;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--card), var(--bg-2));
+  padding: 0; overflow: visible;
+}
+.jv-curve-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.jv-rider {
+  position: absolute; transform: translate(-50%, -50%);
+  transition: left 0.28s linear, top 0.28s linear;
+  filter: drop-shadow(0 8px 20px rgba(41,199,246,0.55)); pointer-events: none;
+}
+
+/* ---- chapter readout (LANDSCAPE, synced text) ---- */
+.jv-read {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--card), var(--bg-2));
+  padding: 14px 22px 16px;
+}
+/* stagger: header first, then the 3 body columns bit-by-bit (re-fires per chapter
+   because NodeReadout is keyed on node.id and remounts) */
+.jv-read-top { animation: jvUp 0.5s both; animation-delay: 0.02s; }
+.jv-read-body > * { animation: jvUp 0.5s both; }
+.jv-read-body > *:nth-child(1) { animation-delay: 0.12s; }
+.jv-read-body > *:nth-child(2) { animation-delay: 0.22s; }
+.jv-read-body > *:nth-child(3) { animation-delay: 0.32s; }
+@keyframes jvUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+.jv-read-top { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.jv-read-top .jv-vemo { flex: 0 0 auto; filter: drop-shadow(0 4px 14px rgba(41,199,246,0.4)); }
+.jv-read-meta { display: flex; flex-direction: column; flex: 0 0 auto; }
+.jv-read-period { margin: 0; }
+.jv-read-count { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); margin-top: 4px; }
+.jv-read-headline { flex: 1 1 auto; margin: 0; font-size: clamp(1.3rem, 2vw, 1.9rem); }
+
+/* report is now in the LEFT column (narrower): story spans the top, then the
+   broke / won lists sit side by side under it. */
+.jv-read-body { display: grid; grid-template-columns: 1fr 1fr; gap: 14px clamp(16px, 2vw, 28px); }
+.jv-read-story { grid-column: 1 / -1; min-width: 0; }
+.jv-read-lede { color: var(--pale); margin: 0 0 10px; font-size: 0.95rem; }
+
+.jv-col-label {
+  display: inline-block; margin-bottom: 10px;
+  font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 6px;
+}
+.jv-col-label--broke { color: var(--bad); background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.3); }
+.jv-col-label--won { color: var(--ok); background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.3); }
+.jv-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.jv-list li { position: relative; padding-left: 18px; color: var(--pale); font-size: 0.9rem; line-height: 1.45; }
+.jv-list li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 7px; height: 7px; border-radius: 999px; background: var(--bad); }
+.jv-list--won li::before { background: var(--ok); }
+
+.jv-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.jv-chip {
+  font-size: 0.72rem; font-weight: 700; color: var(--cyan-soft);
+  background: rgba(41,199,246,0.08); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+}
+.jv-stat { display: flex; flex-direction: column; align-items: flex-end; text-align: right; flex: 0 0 auto; min-width: 96px; }
+.jv-stat-value {
+  font-family: var(--display); font-weight: 700; font-size: 1.5rem; line-height: 1;
+  background: linear-gradient(90deg, var(--white), var(--cyan-soft));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.jv-stat-label { font-size: 0.68rem; color: var(--muted); max-width: 20ch; margin-top: 5px; }
+
+/* ---- team ---- */
+.jv-team { background: radial-gradient(90% 70% at 50% 0%, rgba(41,199,246,0.1), transparent 60%), var(--bg); }
+.jv-team-intro { margin-bottom: 10px; }
+.jv-supervisor {
+  display: flex; align-items: center; gap: 18px;
+  max-width: 540px; margin: 18px auto 6px;
+}
+.jv-supervisor h3 { margin: 6px 0 2px; }
+.jv-team-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px; margin-top: 28px;
+}
+.jv-member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; }
+.jv-member-name { margin: 6px 0 0; font-size: 1.05rem; }
+.jv-member-role { margin: 0; font-size: 0.85rem; }
+.jv-team-foot { margin-top: 40px; }
+.jv-closing-actions { display: inline-flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+
+/* ---- dev capture bar (?capture) ---- */
+.jv-capture {
+  position: fixed; bottom: 10px; left: 10px; z-index: 999;
+  background: rgba(3,7,15,0.92); border: 1px solid var(--cyan); border-radius: 10px;
+  padding: 8px 10px; font-family: var(--mono); font-size: 0.74rem; color: var(--pale); max-width: 92vw;
+}
+.jv-capture-row { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+.jv-capture button { font-family: var(--mono); font-size: 0.7rem; color: var(--white); background: rgba(41,199,246,0.12); border: 1px solid var(--line); border-radius: 6px; padding: 3px 7px; cursor: pointer; }
+.jv-capture button:hover { border-color: var(--cyan); }
+
+/* ---- responsive ---- */
+/* Below ~1024px the one-screen fit isn't worth cramping the video: let it grow
+   to full width and the page scroll naturally. */
+@media (max-width: 1024px) {
+  .jv-theater { min-height: auto; padding: 64px 0 32px; }
+  .jv-theater-wrap {
+    grid-template-columns: 1fr;
+    grid-template-areas: "video" "morale" "report";
+  }
+  .jv-screen { width: 100%; }
+  .jv-curve { height: clamp(120px, 18vh, 200px); }
+}
+@media (max-width: 680px) {
+  .jv-read-top { flex-wrap: wrap; }
+  .jv-read-headline { flex-basis: 100%; order: 3; }
+  .jv-read-top .jv-stat { margin-left: auto; }
+  .jv-read-body { grid-template-columns: 1fr; }
+  .jv-supervisor { flex-direction: column; text-align: center; }
+}
+
+/* respect reduced-motion: kill the loops + transitions, show content statically */
+@media (prefers-reduced-motion: reduce) {
+  .jv-badge-dot, .jv-unmute { animation: none !important; }
+  .jv-read-top, .jv-read-body > * { animation: none !important; }
+  .jv-rider { transition: none !important; }
+  .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+}

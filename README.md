@@ -16,7 +16,7 @@ One pocket device covers every everyday wireless band:
 
 | Radio | What it does |
 |-------|--------------|
-| **Wi-Fi** | Scan APs, deauth, beacon spam, VariPortal (evil-twin login demo) |
+| **Wi-Fi** | Scan APs, deauth, beacon spam, VariPortal (lookalike-network login demo) |
 | **Sub-GHz** | Capture / replay 433 MHz gate & car remotes, frequency scan, RF jammer, key-fob inspect |
 | **NFC** | Read contactless bank cards (masked) and access badges (Mifare) |
 | **IR** | Clone TV / AC remotes, TV-B-Gone |

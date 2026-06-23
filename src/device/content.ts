@@ -67,13 +67,13 @@ export const DEBRIEFS: Record<string, Debrief> = {
   },
   variportal: {
     id: "variportal",
-    feature: "Evil Twin / Credential Capture (VariPortal)",
+    feature: "VariPortal (Credential Capture)",
     vector: "A fake copy of a real Wi-Fi network",
     whatHappened:
       "The device made a fake copy of a real Wi-Fi network. When someone connected, they saw a login page that looked exactly like the real one and typed in the Wi-Fi password. The device checked that password against the real network, so it instantly knew whether it was correct. Nothing was 'hacked' — people simply trusted a familiar-looking page.",
     stayingSafe: [
       "Don't type your Wi-Fi or account password into a page that pops up right after you join a network.",
-      "Check the network name carefully. An evil twin copies it exactly, so watch for duplicates.",
+      "Check the network name carefully. A lookalike network copies it exactly, so watch for duplicates.",
       "On public Wi-Fi, use a VPN and stick to sites that show https.",
       "Turn on WPA3 (or WPA2 with Protected Management Frames) so your devices are harder to push onto a fake network.",
     ],
@@ -136,9 +136,37 @@ export const DEBRIEFS: Record<string, Debrief> = {
     closing:
       "Wireless is convenient, but it shares the air with everyone. Anything important is safer on a wire.",
   },
+  emvcard: {
+    id: "emvcard",
+    feature: "Contactless Card Read (EMV)",
+    vector: "Quietly reading a tap-to-pay card from a few centimetres away",
+    whatHappened:
+      "A contactless bank card was held near the device's coil. The card answered the moment it had power, the same way it answers a shop's payment terminal, and it returned a few public details: the card number with everything but the last four digits hidden (**** **** **** 1234), the expiry date, and sometimes the issuer or network. No PIN, no security code (CVV), and no full number were exposed, because the card simply doesn't hand those over to a plain read. Nothing was 'hacked' — the card just replied to a reader that got close enough.",
+    stayingSafe: [
+      "Not every card responds, and that's normal. Some need a moment of field power to wake, some only reveal details after the full terminal handshake (3-D Secure), and a foil-lined or anti-skim sleeve, an awkward angle, or a phone wallet with a dead battery can stop the read entirely.",
+      "Keep tap-to-pay cards in an RFID-blocking sleeve or wallet so a stranger can't get a casual read in a crowd.",
+      "The real risk here is low — a tap leaks only public, masked details — but it's a good reminder to know your contactless limit and to check your statements.",
+    ],
+    closing:
+      "A tap leaks less than people fear, but more than they expect. Knowing exactly what's exposed is the point: masked number, expiry, sometimes the issuer — never your PIN or CVV.",
+  },
+  keyfob: {
+    id: "keyfob",
+    feature: "Key Fob Inspect",
+    vector: "Capturing a remote twice to tell fixed-code from rolling-code",
+    whatHappened:
+      "A key fob was pressed once, then pressed again, and the device compared the two signals. If the code is identical both times, the fob is 'fixed-code' — record it once and you can replay it forever, which is the same weakness old gates and cheap remotes have. If the code changes every press, the fob is 'rolling-code': a shared counter (often KeeLoq) advances on each press, and the receiver rejects any code it has already seen, so a captured signal is useless tomorrow.",
+    stayingSafe: [
+      "Prefer remotes and cars that use rolling codes. Modern car keys already do this; the cheapest fixed-code fobs and old gate remotes don't.",
+      "If a fob turns out to be fixed-code, treat its signal like a spare key — anyone who records it once can reuse it.",
+      "When buying a gate or garage remote, ask for rolling-code (hopping-code) and avoid the bargain fixed-code ones.",
+    ],
+    closing:
+      "Two presses tell you everything: same code means replayable, a fresh code each time means safe. Rolling codes are the simple fix.",
+  },
 };
 
-export const DEBRIEF_ORDER = ["badusb", "variportal", "beaconspam", "deauth", "rfjam", "nrfjam"];
+export const DEBRIEF_ORDER = ["badusb", "variportal", "beaconspam", "deauth", "rfjam", "nrfjam", "emvcard", "keyfob"];
 
 // ---- Wi-Fi demos -------------------------------------------------------
 
@@ -198,7 +226,7 @@ const variPortal: Demo = {
   ],
   lesson: {
     what: "The device made a fake copy of a real Wi-Fi network with a matching login page. When someone connected and typed the Wi-Fi password, the device checked it against the real network and instantly knew if it was right.",
-    why: "This is the 'evil twin' trick. The fake looks identical, so people type their password without thinking. It captures credentials by abusing trust, not by breaking anything.",
+    why: "This is the lookalike-network trick. The fake looks identical, so people type their password without thinking. It captures credentials by abusing trust, not by breaking anything.",
     defend: "Never type a password into a login page that appears right after joining a network. Check the network name, and on public Wi-Fi use a VPN.",
   },
   debriefId: "variportal",
@@ -271,6 +299,7 @@ const sgKeyFob: Demo = {
     why: "It tells you instantly whether a remote can be cloned by a simple record-and-replay attack.",
     defend: "If a fob is fixed-code, replace or upgrade it. Rolling-code remotes are the safe choice.",
   },
+  debriefId: "keyfob",
 };
 
 const sgLoad: Demo = {
@@ -299,6 +328,7 @@ const nfcBank: Demo = {
     why: "Cards answer any reader that gets close enough, even through a wallet. In Egypt, contactless pays up to 600 EGP with no PIN, and almost nobody knows what a tap can leak at short range. This demo poses no real risk; it just shows what's exposed.",
     defend: "Use an RFID-blocking sleeve or wallet, and keep an eye on contactless limits and your statements.",
   },
+  debriefId: "emvcard",
 };
 
 const nfcAccess: Demo = {
@@ -439,7 +469,7 @@ export const MENU: MenuNode[] = [
       { id: "wifi-scan", label: "AP Scan", blurb: "List nearby networks and signal strength.", demo: apScan },
       { id: "wifi-deauth", label: "Deauth", blurb: "Lab demo: knock a device off Wi-Fi.", demo: deauth },
       { id: "wifi-beacon", label: "BeaconSpam", blurb: "Flood the air with fake network names.", demo: beaconSpam },
-      { id: "wifi-portal", label: "VariPortal", blurb: "Lab demo: fake network + login (evil twin).", demo: variPortal },
+      { id: "wifi-portal", label: "VariPortal", blurb: "Lab demo: fake network + login page.", demo: variPortal },
     ],
   },
   {

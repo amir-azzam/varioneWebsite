@@ -24,3 +24,6 @@ Varione.3mf (1)(1)
 *.njsproj
 *.sln
 *.sw?
+
+# build-journey video (large; produced locally from vari_video.mp4, do not commit raw)
+public/assets/journey.mp4
