@@ -19,7 +19,16 @@ export type VemoMood =
   | "confused"     // shrug, question mark
   | "curious"      // hand on chin, sparkle
   | "oops"         // sweat drop, sheepish
-  | "surprised";   // hands on cheeks, shock
+  | "surprised"    // hands on cheeks, shock
+  // Role figures - used for the team grid avatars (one pose per member's job).
+  | "esp"          // sitting with laptop + ESP board - firmware
+  | "car"          // driving a little car - logistics
+  | "documentation"// reading a book - docs & review
+  | "phone"        // phone + laptop - web & simulator
+  | "presentation" // at a board, presenting
+  | "uipaint"      // easel + paint palette - UX/UI
+  | "video"        // laptop with a video timeline - marketing/brand
+  | "supervisor";  // clipboard + charts - the supervisor
 
 export function Vemo({
   mood,

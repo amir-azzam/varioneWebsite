@@ -11,16 +11,16 @@ export type Member = { name: string; role: string; mood: VemoMood };
 export const SUPERVISOR: Member = {
   name: "Dr. Ahmed Gaber Abuabdallah",
   role: "Project Supervisor",
-  mood: "happy",
+  mood: "supervisor",
 };
 
 export const TEAM: Member[] = [
-  { name: "Ahmed Hossam", role: "Hardware & Firmware Lead", mood: "focused" },
-  { name: "Amir Azzam", role: "Website & Hardware", mood: "thinking" },
-  { name: "Youssef Allam", role: "Website & Device Simulator", mood: "excited" },
-  { name: "Mariam Hosam", role: "Marketing & Brand", mood: "curious" },
-  { name: "Mazen Sadek", role: "Logistics & Coordination", mood: "surprised" },
-  { name: "Malak Mohamed", role: "Presentations", mood: "celebrating" },
-  { name: "Malak Wael", role: "UX/UI", mood: "happy" },
-  { name: "Mayan Mohamed", role: "Documentation & Review", mood: "curious" },
+  { name: "Ahmed Hossam", role: "Hardware & Firmware Lead", mood: "esp" },
+  { name: "Amir Azzam", role: "Website & Hardware", mood: "focused" },
+  { name: "Youssef Allam", role: "Website & Device Simulator", mood: "phone" },
+  { name: "Mariam Hosam", role: "Marketing & Brand", mood: "video" },
+  { name: "Mazen Sadek", role: "Logistics & Coordination", mood: "car" },
+  { name: "Malak Mohamed", role: "Presentations", mood: "presentation" },
+  { name: "Malak Wael", role: "UX/UI", mood: "uipaint" },
+  { name: "Mayan Mohamed", role: "Documentation & Review", mood: "documentation" },
 ];

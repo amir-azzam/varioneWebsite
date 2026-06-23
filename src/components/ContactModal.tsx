@@ -48,7 +48,12 @@ function recordSend() {
 // Field length caps so nobody can paste a wall of text into your inbox.
 const CAP = { name: 80, phone: 25, email: 120, why: 1000 };
 
+// What the visitor is reaching out for. Drives the form copy and the email subject
+// so the team can triage device orders vs. consultation requests at a glance.
+type Purpose = "buy" | "consult";
+
 export function ContactModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [purpose, setPurpose] = useState<Purpose>("buy");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -104,13 +109,18 @@ export function ContactModal({ open, onClose }: { open: boolean; onClose: () => 
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject: "New Interested buyer",
+          subject: purpose === "consult"
+            ? "New consultation request"
+            : "New device enquiry",
           from_name: "VariOne website",
           botcheck: false, // Web3Forms' own honeypot flag
+          Purpose: purpose === "consult"
+            ? "Consultation (in-house testing / training)"
+            : "Buy a device",
           Name: name.trim(),
           Email: email.trim(),
           Phone: phone.trim(),
-          Reason: why.trim(),
+          Details: why.trim(),
         }),
       });
       const data = await res.json();
@@ -144,9 +154,46 @@ export function ContactModal({ open, onClose }: { open: boolean; onClose: () => 
         ) : (
           <>
             <span className="eyebrow">Contact us</span>
-            <h3 className="contact-title">Want a VariOne?</h3>
+            <h3 className="contact-title">Get in touch</h3>
             <p className="muted contact-sub">
-              Leave your details and tell us why you want one. We'll reach out.
+              First, what can we help you with?
+            </p>
+
+            {/* Purpose: device order vs. consultation. Sets the email subject so
+                the team can triage at a glance. */}
+            <div className="purpose-seg" role="radiogroup" aria-label="Reason for contacting us">
+              <button
+                type="button" role="radio" aria-checked={purpose === "buy"}
+                className={`purpose-opt ${purpose === "buy" ? "is-active" : ""}`}
+                onClick={() => setPurpose("buy")}
+              >
+                <span className="purpose-opt-t">Buy a device</span>
+                <span className="purpose-opt-d">Order a VariOne unit</span>
+              </button>
+              <button
+                type="button" role="radio" aria-checked={purpose === "consult"}
+                className={`purpose-opt ${purpose === "consult" ? "is-active" : ""}`}
+                onClick={() => setPurpose("consult")}
+              >
+                <span className="purpose-opt-t">Consultation</span>
+                <span className="purpose-opt-d">In-house testing or training</span>
+              </button>
+            </div>
+
+            <p className="purpose-note">
+              {purpose === "consult" ? (
+                <>
+                  <strong>Consultation</strong> is for having us come in-house to run our
+                  security testing, or training if you're an educational entity. Priced
+                  per quote where needed - tell us your scope below.
+                </>
+              ) : (
+                <>
+                  <strong>Buying a device</strong> gets you your own VariOne unit. Tell us
+                  your purpose below so we can set you up with the right configuration, if
+                  you're the right fit.
+                </>
+              )}
             </p>
 
             <form className="contact-form" onSubmit={submit}>
@@ -177,9 +224,12 @@ export function ContactModal({ open, onClose }: { open: boolean; onClose: () => 
               </label>
 
               <label className="field">
-                <span>Why do you want VariOne?</span>
+                <span>{purpose === "consult" ? "What do you need?" : "Why do you want VariOne?"}</span>
                 <textarea value={why} onChange={(e) => setWhy(e.target.value)}
-                  required maxLength={CAP.why} rows={4} placeholder="Tell us what you'd use it for" />
+                  required maxLength={CAP.why} rows={4}
+                  placeholder={purpose === "consult"
+                    ? "In-house testing, training for a class or lab, scope and timeline..."
+                    : "Tell us what you'd use it for"} />
               </label>
 
               <button className="btn btn--primary contact-submit" type="submit" disabled={busy}>
