@@ -34,7 +34,7 @@ const SIGNALS: Sig[] = [
       { name: "AP Scan", desc: "List nearby networks, their strength and channel." },
       { name: "Deauth", desc: "Flood fake 'disconnect' messages until a device drops off. 2.4 GHz.", debrief: true },
       { name: "BeaconSpam", desc: "Broadcast a list of fake Wi-Fi network names at once, loaded from a file.", debrief: true },
-      { name: "VariPortal (Evil Twin)", desc: "Clone a real network with a login page and check the typed password against the real one.", debrief: true },
+      { name: "VariPortal (Credential Capture)", desc: "Clone a real network with a login page and check the typed password against the real one.", debrief: true },
     ],
   },
   {
