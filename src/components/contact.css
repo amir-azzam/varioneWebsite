@@ -6,7 +6,11 @@
   z-index: 100;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: 16px;
+  /* allow a tall modal to scroll within the backdrop on short screens, and keep
+     the scroll gesture from chaining to the page behind it (mobile bug). */
+  overflow-y: auto;
+  overscroll-behavior: contain;
   /* the page behind turns opaque + blurred */
   background: rgba(3, 9, 20, 0.72);
   backdrop-filter: blur(8px);
@@ -20,6 +24,12 @@
   position: relative;
   width: 100%;
   max-width: 440px;
+  /* never taller than the screen: the card itself scrolls, the page stays put.
+     dvh tracks the mobile address-bar so the bottom (Send) is always reachable. */
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: linear-gradient(180deg, var(--card), var(--bg-2));
   border: 1px solid var(--line);
   border-radius: var(--radius);
